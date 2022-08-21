@@ -13,3 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+ /* .alert {
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+  }
+  
+  .alert.fade {
+    opacity: 0;
+  } */

@@ -1,14 +1,46 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Users</h1>
-
-<div id="users">
-  <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
-  <% end %>
+<div id="flash">
+    <% flash.each do |type, msg| %>
+    <div class="alert alert-info">
+        <%= msg %>
+    </div>
+    <% end %>
 </div>
 
-<%= link_to "New user", new_user_path %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+    setTimeout(function(){
+        $('#flash').remove();
+    }, 5000);
+    })
+</script>
+
+<h1>User List</h1>
+
+<%= link_to "Add User", new_user_path %>
+
+<table>
+  <thead>
+    <tr>
+      <td>ID</td>
+      <td>Name</td>
+      <td>Password</td>
+      <td>Position</td>
+      <td>Management</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.name %></td>
+      <td><%= user.password %></td>
+      <td><%= user.position %></td>
+      <td>
+        <%= link_to "Edit", edit_user_path(user) %>
+        <%= link_to "Delete", user_path(user), method: "delete", data: { confirm: "Confirm" } %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
