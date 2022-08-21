@@ -35,17 +35,17 @@ class TasksController < ApplicationController
         end
     end
 
-    # def destroy
-    #     @task = Task.find_by(id: params[:id])
-    #     @task.destroy if @task
-    #     redirect_to tasks_path, notice: "Success!"
-    # end
-
-    def show
+    def destroy
         @task = Task.find_by(id: params[:id])
         @task.destroy if @task
         redirect_to tasks_path, notice: "Success!"
     end
+
+    # def show
+    #     @task = Task.find_by(id: params[:id])
+    #     @task.destroy if @task
+    #     redirect_to tasks_path, notice: "Success!"
+    # end
     
 
     private

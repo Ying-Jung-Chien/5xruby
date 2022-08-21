@@ -38,7 +38,7 @@
       <td><%= user.position %></td>
       <td>
         <%= link_to "Edit", edit_user_path(user) %>
-        <%= link_to "Delete", user_path(user), method: "delete", data: { confirm: "Confirm" } %>
+        <%= link_to "Delete", user_path(user), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
       </td>
     </tr>
     <% end %>

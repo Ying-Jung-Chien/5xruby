@@ -46,7 +46,7 @@
       <td><%= task.created_at %></td>
       <td>
         <%= link_to "Edit", edit_task_path(task) %>
-        <%= link_to "Delete", task_path(task), method: "delete", data: { confirm: "Confirm" } %>
+        <%= link_to "Delete", task_path(task), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
       </td>
     </tr>
     <% end %>
