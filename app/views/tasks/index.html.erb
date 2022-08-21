@@ -1,0 +1,54 @@
+<div id="flash">
+    <% flash.each do |type, msg| %>
+    <div class="alert alert-info">
+        <%= msg %>
+    </div>
+    <% end %>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+    setTimeout(function(){
+        $('#flash').remove();
+    }, 5000);
+    })
+</script>
+
+<h1>Task List</h1>
+
+<%= link_to "Add Task", new_task_path %>
+
+<table>
+  <thead>
+    <tr>
+      <td>ID</td>
+      <td>Header</td>
+      <td>Content</td>
+      <td>Priority</td>
+      <td>Status</td>
+      <td>Start</td>
+      <td>End</td>
+      <td>Build</td>
+      <td>Management</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+    <tr>
+      <td><%= task.id %></td>
+      <td><%= task.header %></td>
+      <td><%= task.content %></td>
+      <td><%= task.priority %></td>
+      <td><%= task.status %></td>
+      <td><%= task.start %></td>
+      <td><%= task.end %></td>
+      <td><%= task.created_at %></td>
+      <td>
+        <%= link_to "Edit", edit_task_path(task) %>
+        <%= link_to "Delete", task_path(task), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
