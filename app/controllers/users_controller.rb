@@ -41,11 +41,11 @@ class UsersController < ApplicationController
         redirect_to users_path, notice: "Success!"
     end
 
-    # def show
-    #     @user = User.find_by(id: params[:id])
-    #     @user.destroy if @user
-    #     redirect_to users_path, notice: "Success!"
-    # end
+    def show
+        @user = User.find_by(id: params[:id])
+        # @user.destroy if @user
+        # redirect_to users_path, notice: "Success!"
+    end
     
 
     private
