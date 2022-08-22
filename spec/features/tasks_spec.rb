@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'webdrivers'
 
 RSpec.feature "Tasks", type: :feature do
   scenario "User creates a new task" do
@@ -62,13 +63,23 @@ RSpec.feature "Tasks", type: :feature do
 
     visit "/tasks"
 
+    expect(Task.count).to eq(2)
+
     find("a[href='/tasks/#{task.id}']").click
 
-    # a = page.driver.browser.switch_to.alert
-    # expect(a.text).to eq("Confirm")
-    # a.accept
-
+    expect(Task.count).to eq(1)
     expect(page).to have_text("Success!")
+
+    # expect {
+    #   accept_confirm do
+    #   click_link '確認'
+    # end
+    # sleep 1 #needed because click_link doesn't wait for side effects to occur, although it should really be an expectation to see something that changes on the page after the article is deleted
+    # }.to change(Task, :count).by(-1)
+
+    # accept_alert 'Confirm' do
+    #   find("a[href='/tasks/#{task.id}']").click
+    # end
 
   end
 
