@@ -31,7 +31,7 @@ RSpec.describe "users", type: :request do
 
   describe "GET /show" do
     it "should assigns user to @user" do
-      user = User.create(name: "test", password: "test", position: "user")
+      user = create(:user)
       get user_url(user)
       expect(assigns(:user)).to eq user
     end
@@ -39,7 +39,7 @@ RSpec.describe "users", type: :request do
 
   describe "GET /edit" do
     it "should assigns user to @user" do
-      user = User.create(name: "test", password: "test", position: "user")
+      user = create(:user)
       get user_url(user)
       expect(assigns(:user)).to eq user
     end
@@ -47,7 +47,6 @@ RSpec.describe "users", type: :request do
 
   describe "GET /new" do
     it "should assigns a new user to @user" do
-      # user = User.create(name: "test", password: "test", position: "user")
       get new_user_url
       expect(assigns(:user)).to be_a_new(User)
     end
@@ -92,14 +91,14 @@ RSpec.describe "users", type: :request do
       }
 
       it "updates the requested user" do
-        user = User.create(name: "test", password: "test", position: "user")
+        user = create(:user)
         patch user_url(user), params: { user: new_attributes }
         user.reload
         expect(user.name).to eq new_attributes[:name]
       end
 
       it "redirects to the user" do
-        user = User.create(name: "test", password: "test", position: "user")
+        user = create(:user)
         patch user_url(user), params: { user: new_attributes }
         user.reload
         expect(response).to redirect_to(users_url)
@@ -117,14 +116,14 @@ RSpec.describe "users", type: :request do
 
   describe "DELETE /destroy" do
     it "destroys the requested user" do
-      user = User.create(name: "test", password: "test", position: "user")
+      user = create(:user)
       expect {
         delete user_url(user)
       }.to change(User, :count).by(-1)
     end
 
     it "redirects to the user list" do
-      user = User.create(name: "test", password: "test", position: "user")
+      user = create(:user)
       delete user_url(user)
       expect(response).to redirect_to(users_url)
     end

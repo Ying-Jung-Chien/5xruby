@@ -1,6 +1,7 @@
-<h1>Add Task</h1>
+<%# <h1>Add Task</h1> %>
+<h1 class="add_task"><%= t("add_task") %></h1>
 
 <%= render "form", task: @task %>
 
 <br />
-<%= link_to 'Back to task list', tasks_path %>
+<%= link_to t("Back to task list"), tasks_path %>

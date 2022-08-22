@@ -5,6 +5,8 @@ gem 'rails-controller-testing'
 
 gem 'rubocop'
 
+gem "rails-i18n"
+
 ruby "3.0.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"

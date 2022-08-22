@@ -15,22 +15,23 @@
     })
 </script>
 
-<h1>Task List</h1>
+<%# <h1>Task List</h1> %>
+<h1><%= t("task_list") %></h1>
 
-<%= link_to "Add Task", new_task_path %>
+<%= link_to t("add_task"), new_task_path %>
 
 <table>
   <thead>
     <tr>
-      <td>ID</td>
-      <td>Header</td>
-      <td>Content</td>
-      <td>Priority</td>
-      <td>Status</td>
-      <td>Start Time</td>
-      <td>End Time</td>
-      <td>Build</td>
-      <td>Management</td>
+      <td><%= t("id") %></td>
+      <td><%= t("header") %></td>
+      <td><%= t("content") %></td>
+      <td><%= t("priority") %></td>
+      <td><%= t("status") %></td>
+      <td><%= t("start_time") %></td>
+      <td><%= t("end_time") %></td>
+      <td><%= t("build") %></td>
+      <td><%= t("management") %></td>
     </tr>
   </thead>
   <tbody>
@@ -45,8 +46,8 @@
       <td><%= task.end_time %></td>
       <td><%= task.created_at %></td>
       <td>
-        <%= link_to "Edit", edit_task_path(task) %>
-        <%= link_to "Delete", task_path(task), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
+        <%= link_to t("edit_task"), edit_task_path(task) %>
+        <%= link_to t("delete_task"), task_path(task), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
       </td>
     </tr>
     <% end %>

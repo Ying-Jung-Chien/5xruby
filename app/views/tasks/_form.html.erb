@@ -1,21 +1,21 @@
 <%= form_for(task) do |f| %>
-  <%= f.label :header, "Header" %>
+  <%= f.label :header, t("header") %>
   <%= f.text_field :header %> <br />
 
-  <%= f.label :content, "Content" %>
+  <%= f.label :content, t("content") %>
   <%= f.text_area :content %> <br />
 
-  <%= f.label :priority, "Priority" %>
+  <%= f.label :priority, t("priority") %>
   <%= f.number_field :priority %> <br />
 
-  <%= f.label :status, "Status" %>
+  <%= f.label :status, t("status") %>
   <%= f.number_field :status %> <br />
 
-  <%= f.label :start_time, "Start Time" %>
+  <%= f.label :start_time, t("start_time") %>
   <%= f.datetime_field :start_time %> <br />
 
-  <%= f.label :end_time, "End Time" %>
+  <%= f.label :end_time, t("end_time") %>
   <%= f.datetime_field :end_time %> <br />
 
-  <%= f.submit %>
+  <%= f.submit t("submit") %>
 <% end %>

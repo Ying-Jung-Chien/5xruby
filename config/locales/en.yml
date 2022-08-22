@@ -31,3 +31,20 @@
 
 en:
   hello: "Hello world"
+  task_list: Task List
+  add_task: Add Task
+  id: ID
+  header: Header
+  content: Content
+  priority: Priority
+  status: Status
+  start_time: Start Time
+  end_time: End Time
+  build: Build Time
+  management: Management
+  edit_task: Edit Task
+  delete_task: Delete Task
+  submit: Submit
+  back_to_task_list: Back to task list
+
+  user_list: User List
