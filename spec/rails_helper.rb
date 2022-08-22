@@ -8,6 +8,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'capybara/rails'
 require 'capybara/rspec'
+require 'support/factory_bot'
 Capybara.javascript_driver = :selenium_chrome_headless
 Capybara.server_port = 3001
 Capybara.app_host = 'http://localhost:3001'

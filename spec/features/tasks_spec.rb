@@ -16,8 +16,8 @@ RSpec.feature "Tasks", type: :feature do
       fill_in "Content", with: "12345678"
       fill_in "Priority", with: 0
       fill_in "Status", with: 1
-      fill_in "Start", with: "2022-08-22T14:39:30Z"
-      fill_in "End", with: "2022-08-23T14:39:30Z"
+      fill_in "Start Time", with: "2022-08-22T14:39:30Z"
+      fill_in "End Time", with: "2022-08-23T14:39:30Z"
     end
     
     click_button "Create Task"
@@ -30,8 +30,8 @@ RSpec.feature "Tasks", type: :feature do
 
   scenario "User edits a task" do
 
-    task = Task.create!( header:"test", content:"12345678", priority:0, status:1, start:"2022-08-22T14:39:30Z", end:"2022-08-23T14:39:30Z")
-
+    # task = Task.create!( header:"test", content:"12345678", priority:0, status:1, start:"2022-08-22T14:39:30Z", end:"2022-08-23T14:39:30Z")
+    task = FactoryBot.create(:task)
     visit "/tasks"
 
     find("a[href='/tasks/#{task.id}/edit']").click
@@ -44,8 +44,8 @@ RSpec.feature "Tasks", type: :feature do
       fill_in "Content", with: "12345678"
       fill_in "Priority", with: "0"
       fill_in "Status", with: "1"
-      fill_in "Start", with: "2022-08-22T14:39:30Z"
-      fill_in "End", with: "2022-08-23T14:39:30Z"
+      fill_in "Start Time", with: "2022-08-22T14:39:30Z"
+      fill_in "End Time", with: "2022-08-23T14:39:30Z"
     end
     
     click_button "Update Task"
@@ -59,8 +59,8 @@ RSpec.feature "Tasks", type: :feature do
 
   scenario "User deletes a task" do
 
-    task = Task.create!( header:"test", content:"12345678", priority:0, status:1, start:"2022-08-22T14:39:30Z", end:"2022-08-23T14:39:30Z")
-
+    # task = Task.create!( header:"test", content:"12345678", priority:0, status:1, start:"2022-08-22T14:39:30Z", end:"2022-08-23T14:39:30Z")
+    task = FactoryBot.create(:task)
     visit "/tasks"
 
     expect(Task.count).to eq(1)
