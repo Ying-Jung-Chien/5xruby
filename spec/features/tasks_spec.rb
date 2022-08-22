@@ -63,11 +63,11 @@ RSpec.feature "Tasks", type: :feature do
 
     visit "/tasks"
 
-    expect(Task.count).to eq(2)
+    expect(Task.count).to eq(1)
 
     find("a[href='/tasks/#{task.id}']").click
 
-    expect(Task.count).to eq(1)
+    expect(Task.count).to eq(0)
     expect(page).to have_text("Success!")
 
     # expect {
