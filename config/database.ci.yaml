@@ -1,0 +1,9 @@
+test:
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  database: traning5x_test
+  host:     <%= ENV.fetch('PGHOST',  'localhost') %>
+  username: <%= ENV.fetch('POSTGRES_USER', nil) %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', nil) %>
+  port:     <%= ENV.fetch('PG_PORT', 5432) %>
