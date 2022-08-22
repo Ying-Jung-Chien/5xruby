@@ -18,16 +18,16 @@
 <%# <h1>User List</h1> %>
 <h1><%= t("user_list") %></h1>
 
-<%= link_to "Add User", new_user_path %>
+<%= link_to t("add_user"), new_user_path %>
 
 <table>
   <thead>
     <tr>
-      <td>ID</td>
-      <td>Name</td>
-      <td>Password</td>
-      <td>Position</td>
-      <td>Management</td>
+      <td><%= t("id") %></td>
+      <td><%= t("name") %></td>
+      <td><%= t("password") %></td>
+      <td><%= t("position") %></td>
+      <td><%= t("management") %></td>
     </tr>
   </thead>
   <tbody>
@@ -38,8 +38,8 @@
       <td><%= user.password %></td>
       <td><%= user.position %></td>
       <td>
-        <%= link_to "Edit", edit_user_path(user) %>
-        <%= link_to "Delete", user_path(user), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
+        <%= link_to t("edit_user"), edit_user_path(user) %>
+        <%= link_to t("delete_user"), user_path(user), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
       </td>
     </tr>
     <% end %>

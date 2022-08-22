@@ -1,12 +1,12 @@
 <%= form_for(user) do |f| %>
-  <%= f.label :name, "Name" %>
+  <%= f.label :name, t("name") %>
   <%= f.text_field :name %> <br />
 
-  <%= f.label :password, "Password" %>
+  <%= f.label :password, t("password") %>
   <%= f.text_field :password %> <br />
 
-  <%= f.label :position, "Position" %>
+  <%= f.label :position, t("position") %>
   <%= f.text_field :position %> <br />
 
-  <%= f.submit %>
+  <%= f.submit t("submit")%>
 <% end %>

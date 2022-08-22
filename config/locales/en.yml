@@ -48,3 +48,10 @@ en:
   back_to_task_list: Back to task list
 
   user_list: User List
+  name: Name
+  password: Password
+  position: Position
+  edit_user: Edit User
+  delete_user: Delete User
+  add_user: Add User
+  back_to_user_list: Back to user list
