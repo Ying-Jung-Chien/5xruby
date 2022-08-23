@@ -23,7 +23,7 @@ RSpec.describe "users", type: :request do
 
   describe "GET /index" do
     it "should assgins all users to @users" do
-      user = User.create(name: "test", password: "test", position: "user")
+      user = create(:user)
       get users_url
       expect(assigns(:users)).to eq [user]
     end
