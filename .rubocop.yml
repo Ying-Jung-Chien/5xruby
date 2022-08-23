@@ -64,7 +64,7 @@ Metrics:
 
 Layout:
   Exclude:
-    - db/migrate/*
+    - db/*
     - Rakefile
     - Gemfile
     - config/**/*
