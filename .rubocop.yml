@@ -52,9 +52,6 @@ Metrics/AbcSize:
 Metrics/MethodLength:
   Max: 20
 
-# RSpec/ExampleLength:
-#   Max: 10
-
 Metrics:
   Exclude:
     - db/migrate/*

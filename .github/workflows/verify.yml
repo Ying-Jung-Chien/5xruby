@@ -64,5 +64,5 @@ jobs:
           POSTGRES_PASSWORD: postgres
           RAILS_ENV: test
         run:  bundle exec rspec
-      # - name: Run RuboCop
-      #   run: bundle exec rubocop --parallel
+      - name: Run RuboCop
+        run: bundle exec rubocop --parallel
