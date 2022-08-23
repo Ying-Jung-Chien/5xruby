@@ -4,7 +4,7 @@ RSpec.describe "users", type: :request do
   let(:valid_attributes) {
     {
       name: "test",
-      password: "test",
+      password: "Test1234@",
       position: "user"
     }
   }
@@ -81,7 +81,7 @@ RSpec.describe "users", type: :request do
       let(:new_attributes) {
         {
           name: "new",
-          password: "test",
+          password: "Test1234",
           position: "user"
         }
       }

@@ -6,10 +6,10 @@
   <%= f.text_area :content %> <br />
 
   <%= f.label :priority, t("priority") %>
-  <%= f.number_field :priority %> <br />
+  <%= f.select :priority, [[t("high"), 2], [t("medium"), 1], [t("low"), 0]] %> <br />
 
   <%= f.label :status, t("status") %>
-  <%= f.number_field :status %> <br />
+  <%= f.select :status, [[t("pending"), 2], [t("processing"), 1], [t("solved"), 0]] %> <br />
 
   <%= f.label :start_time, t("start_time") %>
   <%= f.datetime_field :start_time %> <br />

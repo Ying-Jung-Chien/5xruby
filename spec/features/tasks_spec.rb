@@ -12,8 +12,8 @@ RSpec.feature "Tasks", type: :feature do
     within("#new_task") do # 填表單
       fill_in I18n.t("header"), with: "test_spec"
       fill_in I18n.t("content"), with: "12345678"
-      fill_in I18n.t("priority"), with: 0
-      fill_in I18n.t("status"), with: 1
+      find('#task_priority').find(:xpath, 'option[1]').select_option
+      find('#task_status').find(:xpath, 'option[2]').select_option
       fill_in I18n.t("start_time"), with: "2022-08-22T14:39:30Z"
       fill_in I18n.t("end_time"), with: "2022-08-23T14:39:30Z"
     end
@@ -37,8 +37,8 @@ RSpec.feature "Tasks", type: :feature do
     within(".edit_task") do # 填表單
       fill_in I18n.t("header"), with: "edit"
       fill_in I18n.t("content"), with: "12345678"
-      fill_in I18n.t("priority"), with: 0
-      fill_in I18n.t("status"), with: 1
+      find('#task_priority').find(:xpath, 'option[1]').select_option
+      find('#task_status').find(:xpath, 'option[2]').select_option
       fill_in I18n.t("start_time"), with: "2022-08-22T14:39:30Z"
       fill_in I18n.t("end_time"), with: "2022-08-23T14:39:30Z"
     end

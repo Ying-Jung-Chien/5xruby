@@ -46,7 +46,15 @@ en:
   delete_task: Delete Task
   submit: Submit
   back_to_task_list: Back to task list
+  high: High
+  medium: Medium
+  low: Low
+  pending: Pending
+  processing: Processing
+  solved: Solved
 
+  user: User
+  supervisor: Supervisor
   user_list: User List
   name: Name
   password: Password

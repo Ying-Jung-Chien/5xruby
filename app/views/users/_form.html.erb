@@ -6,7 +6,7 @@
   <%= f.text_field :password %> <br />
 
   <%= f.label :position, t("position") %>
-  <%= f.text_field :position %> <br />
+  <%= f.select :position, [[t("user"), "user"], [t("supervisor"), "supervisor"]] %> <br />
 
   <%= f.submit t("submit")%>
 <% end %>
