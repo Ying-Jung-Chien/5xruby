@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @tasks = Task.order(created_at: :desc)
   end
 
   def new
@@ -40,12 +40,6 @@ class TasksController < ApplicationController
       @task.destroy if @task
       redirect_to tasks_path, notice: "Success!"
   end
-
-  # def show
-  #     @task = Task.find_by(id: params[:id])
-  #     @task.destroy if @task
-  #     redirect_to tasks_path, notice: "Success!"
-  # end
 
   private
 

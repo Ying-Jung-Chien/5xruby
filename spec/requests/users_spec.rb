@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "users", type: :request do
-  # let(:user) {
-  #   User.create(name:"test", password:"test", position:"user")
-  # }
-
   let(:valid_attributes) {
     {
       name: "test",

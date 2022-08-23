@@ -9,8 +9,6 @@ RSpec.feature "Tasks", type: :feature do
 
     expect(page).to have_css('.add_task')
 
-    # visit "/tasks/new"
-
     within("#new_task") do # 填表單
       fill_in I18n.t("header"), with: "test_spec"
       fill_in I18n.t("content"), with: "12345678"
@@ -64,15 +62,22 @@ RSpec.feature "Tasks", type: :feature do
     expect(Task.count).to eq(0)
     expect(page).to have_text("Success!")
 
-    # expect {
-    #   accept_confirm do
-    #   click_link '確認'
-    # end
-    # sleep 1 #needed because click_link doesn't wait for side effects to occur, although it should really be an expectation to see something that changes on the page after the article is deleted
-    # }.to change(Task, :count).by(-1)
-
     # accept_alert 'Confirm' do
     #   find("a[href='/tasks/#{task.id}']").click
     # end
+  end
+
+  scenario "order by created time" do
+    tasks = create_list(:task, 3)
+    visit "/tasks"
+
+    within 'tr:nth-child(2)' do
+      expect(page).to have_text tasks[1].header
+    end
+    
+    within 'tr:nth-child(3)' do
+      expect(page).to have_text tasks[0].header
+    end
+
   end
 end
