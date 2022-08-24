@@ -80,3 +80,9 @@ group :test, :development do
   gem 'faker'
   gem "rspec-rails"
 end
+
+group :production do    
+    gem 'pg'
+    gem 'rails_12factor'
+    gem 'heroku-deflater'   
+end
