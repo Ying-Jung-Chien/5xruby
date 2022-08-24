@@ -15,7 +15,7 @@ class UsersController < ApplicationController
         redirect_to users_path, notice: "Success!"
       else
         # 失敗
-        render :new
+        render :new, status: :unprocessable_entity
       end
   end
 
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
         redirect_to users_path, notice: "Success!"
       else
         # 失敗
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
   end
 

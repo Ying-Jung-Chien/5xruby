@@ -3,14 +3,5 @@
 <%= render "form", user: @user %>
 
 <br />
-<% if @user.invalid? %>
-  <h3>The following errors prevented the user from being saved:</h3>
-  <ul>
-    <% @user.errors.full_messages.each do |msg| %>
-     <li><%= msg %></li> 
-    <% end %>
-  </ul>
-<% end %>
-
 
 <%= link_to t("back_to_user_list"), users_path %>

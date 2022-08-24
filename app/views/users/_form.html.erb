@@ -1,9 +1,21 @@
 <%= form_for(user) do |f| %>
-  <%= f.label :name, t("name") %>
-  <%= f.text_field :name %> <br />
+  <div class="form-group <%= (f.object.errors[:name].any?)? "has-error" : "" %>">
+    <%= f.label :name, t("name"), :class => "control-label" %>
+    <%= f.text_field :name, :class => "form-control" %>
 
-  <%= f.label :password, t("password") %>
-  <%= f.text_field :password %> <br />
+    <% if f.object.errors[:name] %>
+      <span class="help-block"><%= safe_join(f.object.errors[:name], "、") %></span>
+    <% end %>
+  </div>
+
+  <div class="form-group <%= (f.object.errors[:password].any?)? "has-error" : "" %>">
+    <%= f.label :password, t("password"), :class => "control-label" %>
+    <%= f.text_field :password, :class => "form-control" %>
+
+    <% if f.object.errors[:password] %>
+      <span class="help-block"><%= safe_join(f.object.errors[:password], "、") %></span>
+    <% end %>
+  </div>
 
   <%= f.label :position, t("position") %>
   <%= f.select :position, [[t("user"), "user"], [t("supervisor"), "supervisor"]] %> <br />

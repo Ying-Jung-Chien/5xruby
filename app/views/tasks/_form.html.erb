@@ -1,9 +1,21 @@
 <%= form_for(task) do |f| %>
-  <%= f.label :header, t("header") %>
-  <%= f.text_field :header %> <br />
+  <div class="form-group <%= (f.object.errors[:header].any?)? "has-error" : "" %>">
+    <%= f.label :header, t("header"), :class => "control-label" %>
+    <%= f.text_field :header, :class => "form-control" %>
 
-  <%= f.label :content, t("content") %>
-  <%= f.text_area :content %> <br />
+    <% if f.object.errors[:header] %>
+      <span class="help-block"><%= safe_join(f.object.errors[:header], "、") %></span>
+    <% end %>
+  </div>
+
+  <div class="form-group <%= (f.object.errors[:content].any?)? "has-error" : "" %>">
+    <%= f.label :content, t("content"), :class => "control-label" %>
+    <%= f.text_field :content, :class => "form-control" %>
+
+    <% if f.object.errors[:content] %>
+      <span class="help-block"><%= safe_join(f.object.errors[:content], "、") %></span>
+    <% end %>
+  </div>
 
   <%= f.label :priority, t("priority") %>
   <%= f.select :priority, [[t("high"), 2], [t("medium"), 1], [t("low"), 0]] %> <br />
@@ -14,8 +26,14 @@
   <%= f.label :start_time, t("start_time") %>
   <%= f.datetime_field :start_time %> <br />
 
-  <%= f.label :end_time, t("end_time") %>
-  <%= f.datetime_field :end_time %> <br />
+  <div class="form-group <%= (f.object.errors[:end_time].any?)? "has-error" : "" %>">
+    <%= f.label :end_time, t("end_time"), :class => "control-label" %>
+    <%= f.datetime_field :end_time, :class => "form-control" %>
+
+    <% if f.object.errors[:end_time] %>
+      <span class="help-block"><%= safe_join(f.object.errors[:end_time], "、") %></span>
+    <% end %>
+  </div>
 
   <%= f.submit t("submit") %>
 <% end %>

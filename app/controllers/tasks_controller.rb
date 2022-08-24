@@ -8,14 +8,14 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = Task.create(task_params)
 
       if @task.save
         # 成功
         redirect_to tasks_path, notice: "Success!"
       else
         # 失敗
-        render :new
+        render :new, status: :unprocessable_entity
       end
   end
 
@@ -31,7 +31,7 @@ class TasksController < ApplicationController
         redirect_to tasks_path, notice: "Success!"
       else
         # 失敗
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
   end
 
