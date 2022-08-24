@@ -8,5 +8,5 @@ class User < ApplicationRecord
   /x
   validates :name, presence: true
   validates :password, presence: true, format: { with: /[A-Za-z\d]{8,}/ }
-  validates :position, presence: true, format: { with: /[(user)(supervisor)]/ }
+  validates :position, presence: true, format: { with: /[(user)pvio]/ }
 end
