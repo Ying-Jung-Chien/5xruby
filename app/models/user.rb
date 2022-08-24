@@ -7,6 +7,6 @@ class User < ApplicationRecord
   (?=.*[A-Z])        # Must contain an upper case character
   /x
   validates :name, presence: true
-  validates :password, presence: true, format: { with: /[A-Za-z\d]{8,}/ , message: " only accepts:length >= 8, at least one digit & lower/upper character"}
-  validates :position, presence: true, format: { with: /[(user)(supervisor)]/ }
+  validates :password, presence: true, format: { with: /[A-Za-z\d]{8,}/, message: " only accepts:length >= 8, at least one digit & lower/upper character" }
+  validates :position, presence: true, format: { with: /[(user)pvio]/ }
 end
