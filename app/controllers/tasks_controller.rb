@@ -1,7 +1,12 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.order(created_at: :desc)
+    @tasks = Task.order("#{params[:sort]} #{params[:dir]}")
   end
+
+  # def next_direction(dir)
+  #   dir == 'asc' ? 'desc' : 'asc'
+  #   return dir
+  # end
 
   def new
     @task = Task.new
