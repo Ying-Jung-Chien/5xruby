@@ -100,6 +100,8 @@ GEM
       i18n (>= 1.8.11, < 2)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    heroku-deflater (0.6.3)
+      rack (>= 1.4.5)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.1.5)
@@ -177,6 +179,11 @@ GEM
     rails-i18n (7.0.5)
       i18n (>= 0.7, < 2)
       railties (>= 6.0.0, < 8)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.5)
+    rails_stdout_logging (0.0.5)
     railties (7.0.3.1)
       actionpack (= 7.0.3.1)
       activesupport (= 7.0.3.1)
@@ -273,13 +280,15 @@ DEPENDENCIES
   debug
   factory_bot_rails
   faker
+  heroku-deflater
   importmap-rails
   jbuilder
-  pg (~> 1.4.3)
+  pg
   puma (~> 5.0)
   rails (~> 7.0.3, >= 7.0.3.1)
   rails-controller-testing
   rails-i18n
+  rails_12factor
   rspec-rails
   rubocop
   selenium-webdriver

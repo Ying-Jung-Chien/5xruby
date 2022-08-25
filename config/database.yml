@@ -27,6 +27,8 @@ test:
 
 production:
   <<: *default
+  adapter: postgresql
+  encoding: unicode
   database: ruby_production
   username: alice
   password: alice
