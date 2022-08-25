@@ -1,4 +1,4 @@
-"zh-CN":
+"zh-TW":
   task_list: 任務列表
   add_task: 新增任務
   id: 序號
@@ -14,7 +14,15 @@
   delete_task: 刪除任務
   submit: 送出
   back_to_task_list: 返回任務列表
+  high: 高
+  medium: 中
+  low: 低
+  pending: 待處理
+  processing: 進行中
+  solved: 已完成
 
+  user: 用戶
+  supervisor: 管理者
   user_list: 用戶列表
   name: 姓名
   password: 密碼

@@ -79,3 +79,7 @@ group :test, :development do
   gem 'faker'
   gem "rspec-rails"
 end
+
+group :test do
+  gem 'shoulda-matchers', require: false
+end
