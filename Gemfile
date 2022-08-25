@@ -81,6 +81,10 @@ group :test, :development do
   gem "rspec-rails"
 end
 
+group :test do
+  gem 'shoulda-matchers', require: false
+end
+
 group :production do    
     gem 'pg'
     gem 'rails_12factor'
