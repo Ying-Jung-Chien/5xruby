@@ -8,7 +8,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.create(task_params)
+    @task = Task.new(task_params)
 
       if @task.save
         # 成功
