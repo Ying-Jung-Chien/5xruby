@@ -17,7 +17,7 @@ gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
 # gem "sqlite3", "~> 1.4"
-# gem "pg"
+gem "pg"
 # gem 'rails_12factor', group: :production
 
 # Use the Puma web server [https://github.com/puma/puma]
@@ -87,6 +87,5 @@ end
 
 group :production do    
     gem 'heroku-deflater'   
-    gem 'pg'
     gem 'rails_12factor'
 end
