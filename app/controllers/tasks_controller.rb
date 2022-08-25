@@ -1,6 +1,19 @@
 class TasksController < ApplicationController
   def index
+    if params[:search]
+      search_header
+    end
     @tasks = Task.order("#{params[:sort]} #{params[:dir]}")
+  end
+
+  def search_header
+    if @task = Task.find{|task| task.header.include?(params[:search])}
+      redirect_to task_path(@task)
+    end
+  end
+
+  def show
+    @task = Task.find(params[:id])
   end
 
   def new
