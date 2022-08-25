@@ -25,14 +25,7 @@
       <% Task::SORT_COLUMN_LIST.each do |column_name| %>
         <td><%= link_to t(column_name), sort: column_name, dir: next_dir %></td>
       <% end %>
-      <!--<td><%= link_to t("id"), :sort => "id", :dir => next_dir() %></td>
-      <td><%= link_to t("header"), :sort => "header", :dir => next_dir() %></td>
-      <td><%= link_to t("content"), :sort => "content", :dir => next_dir()  %></td>
-      <td><%= link_to t("priority"), :sort => "priority", :dir => next_dir()  %></td>
-      <td><%= link_to t("status"), :sort => "status", :dir => next_dir()  %></td>
-      <td><%= link_to t("start_time"), :sort => "start_time", :dir => next_dir()  %></td>
-      <td><%= link_to t("end_time"), :sort => "end_time", :dir => next_dir()  %></td>
-      <td><%= link_to t("build"), :sort => "created_at", :dir => next_dir() </td> %> -->
+      
       <td><%= t("management") %></td>
     </tr>
   </thead>
