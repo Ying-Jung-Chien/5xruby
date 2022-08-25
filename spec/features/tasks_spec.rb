@@ -67,20 +67,6 @@ RSpec.feature "Tasks", type: :feature do
     # end
   end
 
-  # scenario "order by created time" do
-  #   tasks = create_list(:task, 3)
-  #   visit "/tasks"
-
-  #   within 'tr:nth-child(2)' do
-  #     expect(page).to have_text tasks[1].header
-  #   end
-    
-  #   within 'tr:nth-child(3)' do
-  #     expect(page).to have_text tasks[0].header
-  #   end
-
-  # end
-
   scenario "order by end time" do
     create_list(:task, 3)
     visit "/tasks"

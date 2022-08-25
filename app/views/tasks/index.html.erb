@@ -6,15 +6,6 @@
     <% end %>
 </div>
 
-
-<script type="text/javascript">
-    $(document).ready(function(){
-    setTimeout(function(){
-        $('#flash').remove();
-    }, 5000);
-    })
-</script>
-
 <h1><%= t("task_list") %></h1>
 
 <%= link_to t("add_task"), new_task_path %>
