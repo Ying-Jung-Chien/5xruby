@@ -6,15 +6,6 @@
     <% end %>
 </div>
 
-
-<script type="text/javascript">
-    $(document).ready(function(){
-    setTimeout(function(){
-        $('#flash').remove();
-    }, 5000);
-    })
-</script>
-
 <h1><%= t("task_list") %></h1>
 
 <%= link_to t("add_task"), new_task_path %>
@@ -22,14 +13,10 @@
 <table>
   <thead>
     <tr>
-      <td><%= t("id") %></td>
-      <td><%= t("header") %></td>
-      <td><%= t("content") %></td>
-      <td><%= t("priority") %></td>
-      <td><%= t("status") %></td>
-      <td><%= t("start_time") %></td>
-      <td><%= t("end_time") %></td>
-      <td><%= t("build") %></td>
+      <% Task::SORT_COLUMN_LIST.each do |column_name| %>
+        <td><%= link_to t(column_name), sort: column_name, dir: next_dir %></td>
+      <% end %>
+      
       <td><%= t("management") %></td>
     </tr>
   </thead>
@@ -39,8 +26,8 @@
       <td><%= task.id %></td>
       <td><%= task.header %></td>
       <td><%= task.content %></td>
-      <td><%= task.priority %></td>
-      <td><%= task.status %></td>
+      <td><%= priority2text(task.priority) %></td>
+      <td><%= status2text(task.status) %></td>
       <td><%= task.start_time %></td>
       <td><%= task.end_time %></td>
       <td><%= task.created_at %></td>
