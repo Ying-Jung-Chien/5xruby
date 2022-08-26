@@ -13,8 +13,26 @@
 <%= form_tag(tasks_path, method: :get) do %>
   <p> Search by header </p>
   <%= text_field_tag(:search, params[:search]) %>
+  <p> Status </p>
+  <label>
+    <%= radio_button_tag :option, 3, params[:option] == 3%>
+    <%= t('all') %>
+  </label>
+  <label>
+    <%= radio_button_tag :option, 2, params[:option] == 2%>
+    <%= t('pending') %>
+  </label>
+  <label>
+    <%= radio_button_tag :option, 1, params[:option] == 1%>
+    <%= t('processing') %>
+  </label>
+  <label>
+    <%= radio_button_tag :option, 0 , params[:option] == 0%>
+    <%= t('solved') %>
+  </label>
   <%= submit_tag ("Search") %>
 <% end %>
+
 
 <table>
   <thead>

@@ -1,21 +1,22 @@
 class TasksController < ApplicationController
   def index
-    if params[:search]
-      search_header
+    if !params[:option].present?
+      params[:option] = 3
     end
-    @tasks = Task.order("#{params[:sort]} #{params[:dir]}")
-  end
 
-  def search_header
-    if @task = Task.find{|task| task.header.include?(params[:search])}
-      redirect_to task_path(@task)
+    if params[:option] != 3 && params[:search].present?
+      @tasks = Task.where("header LIKE ? AND status = ?", "%" + params[:search] + "%", params[:option])
+    elsif params[:search].present?
+      @tasks = Task.where("header LIKE ?", "%" + params[:search] + "%")
+    elsif params[:option] != 3
+      @tasks = Task.where("status = ?", params[:option])
+    elsif params[:sort].present?
+      @tasks = Task.order("#{params[:sort]} #{params[:dir]}")
+    else
+      @tasks = Task.all
     end
   end
-
-  def show
-    @task = Task.find_by(id: params[:id])
-  end
-
+  
   def new
     @task = Task.new
   end
