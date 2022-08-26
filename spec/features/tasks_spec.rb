@@ -67,9 +67,23 @@ RSpec.feature "Tasks", type: :feature do
     # end
   end
 
-  scenario "order by created time" do
-    tasks = create_list(:task, 3)
+  scenario "order by end time" do
+    create_list(:task, 3)
     visit "/tasks"
+    
+    find("a[href='/tasks?dir=desc&sort=end_time']").click
+
+    tasks = Task.order("end_time desc")
+
+    within 'tr:nth-child(2)' do
+      expect(page).to have_text tasks[1].header
+    end
+    
+    within 'tr:nth-child(3)' do
+      expect(page).to have_text tasks[2].header
+    end
+
+    find("a[href='/tasks?dir=asc&sort=end_time']").click
 
     within 'tr:nth-child(2)' do
       expect(page).to have_text tasks[1].header
