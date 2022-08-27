@@ -63,7 +63,7 @@ class TasksController < ApplicationController
   end
 
   def search_tasks
-    tasks = Task.where("header LIKE ?", "%#{params[:search]}%")
+    tasks = Task.page(params[:page]).where("header LIKE ?", "%#{params[:search]}%")
     tasks = tasks.where("status = ?", session[:option]) if session[:option] != '3'
     tasks
   end
