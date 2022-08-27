@@ -30,18 +30,16 @@ RSpec.describe Task, type: :model do
   end
 
   describe "Search" do
-    it 'finds a searched task by header' do
-      tasks = create_list(:task, 10)
-      results = Task.search(2, search: tasks[1].header, sort:'id', dir:'asc')
-      expect(results[0]).to eq(tasks[1])
+    it 'finds a task by header' do
+      task = create(:task, header: 'test')
+      result = described_class.where(header: 'test')
+      expect(result).to eq([task])
     end
 
-    # it 'finds a searched task by status' do
-    #   tasks = create_list(:task, 10)
-    #   results = Task.search(3, option: '0', sort:'id', dir:'asc')
-    #   ans = Task.where("status = 0").order("id asc")
-    #   puts ans[0].header
-    #   expect(results[0]).to eq(ans[0])
-    # end
+    it 'finds a task by status' do
+      task = create(:task, status: 2)
+      result = described_class.where(status: 2)
+      expect(result).to eq([task])
+    end
   end
 end

@@ -1,50 +1,37 @@
 class TasksController < ApplicationController
   def index
-    if !params[:dir].present? && !session[:dir].present?
-      session[:dir] = 'asc'
-    elsif params[:dir].present? 
-      session[:dir] = params[:dir]
-    end
-    
-    if !params[:option].present? && !session[:option].present?
-      session[:option] = '3'
-    elsif params[:option].present? 
-      session[:option] = params[:option]
-    end
+    assign(:dir, 'asc')
+    assign(:option, '3')
+    assign(:sort, 'id')
 
-    if !params[:sort].present? && !session[:sort].present?
-      session[:sort] = 'id'
-    elsif params[:sort].present? 
-      session[:sort] = params[:sort]
-    end
+    @tasks = if session[:option] != '3' && params[:search].present?
+               search(1)
+             elsif session[:option] != '3'
+               search(2)
+             else
+               search(3)
+             end
+  end
 
-    # if session[:option] != '3' && params[:search].present?
-    #   @tasks = Task.where("header LIKE ? AND status = ?", "%" + params[:search] + "%", session[:option]).order("#{session[:sort]} #{session[:dir]}")
-    # elsif params[:search].present?
-    #   @tasks = Task.where("header LIKE ?", "%" + params[:search] + "%").order("#{session[:sort]} #{session[:dir]}")
-    # elsif session[:option] != '3'
-    #   @tasks = Task.where("status = ?", session[:option]).order("#{session[:sort]} #{session[:dir]}")
-    # elsif params[:sort].present?
-    #   @tasks = Task.order("#{params[:sort]} #{params[:dir]}")
-    # else
-    #   @tasks = Task.order("#{session[:sort]} #{session[:dir]}")
-    # end
-
-    if session[:option] != '3' && params[:search].present?
-      @tasks = Task.search(1, params, session)
-    elsif params[:search].present?
-      @tasks = Task.search(2, params, session)
-    elsif session[:option] != '3'
-      @tasks = Task.search(3, params, session)
-    elsif params[:sort].present?
-      @tasks = Task.search(4, params, session)
-    else
-      @tasks = Task.search(5, params, session)
+  def assign(arg, value)
+    if !params[arg].present? && !session[arg].present?
+      session[arg] = value
+    elsif params[arg].present?
+      session[arg] = params[arg]
     end
   end
 
-  
-  
+  def search(method)
+    case method
+    when 1
+      Task.where("header LIKE ? AND status = ?", "%#{params[:search]}%", session[:option]).order("#{session[:sort]} #{session[:dir]}")
+    when 2
+      Task.where("status = ?", session[:option]).order("#{session[:sort]} #{session[:dir]}")
+    else
+      Task.where("header LIKE ?", "%#{params[:search]}%").order("#{session[:sort]} #{session[:dir]}")
+    end
+  end
+
   def new
     @task = Task.new
   end
