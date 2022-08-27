@@ -22,16 +22,15 @@ class TasksController < ApplicationController
   end
 
   def search(method)
+    @paginated = Task.page(params[:page])
     case method
     when 1
-      Task.where("header LIKE ? AND status = ?", "%#{params[:search]}%", session[:option]).order("#{session[:sort]} #{session[:dir]}")
+      @paginated.where("header LIKE ? AND status = ?", "%#{params[:search]}%", session[:option]).order("#{session[:sort]} #{session[:dir]}")
     when 2
-      Task.where("status = ?", session[:option]).order("#{session[:sort]} #{session[:dir]}")
+      @paginated.where("status = ?", session[:option]).order("#{session[:sort]} #{session[:dir]}")
     else
-      Task.where("header LIKE ?", "%#{params[:search]}%").order("#{session[:sort]} #{session[:dir]}")
+      @paginated.where("header LIKE ?", "%#{params[:search]}%").order("#{session[:sort]} #{session[:dir]}")
     end
-
-    # @tasks = Task.page(params[:page]).order("#{session[:sort]} #{session[:dir]}")
   end
 
   def new
