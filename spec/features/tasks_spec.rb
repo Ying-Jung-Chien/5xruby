@@ -107,14 +107,43 @@ RSpec.feature "Tasks", type: :feature do
       expect(page).to have_text tasks[1].header
     end
 
-    test_tasks = Task.where("status = 2").order("id asc")
-    puts test_tasks[1].header
+    # test_tasks = Task.where("status = 2").order("id asc")
+    # puts test_tasks[1].header
 
-    choose(I18n.t('pending'))
-    click_button "Search"
+    # choose(I18n.t('pending'))
+    # click_button "Search"
+
+    # within 'tr:nth-child(2)' do
+    #   expect(page).to have_text test_tasks[1].header
+    # end
+  end
+
+  scenario "order by priority" do
+    create_list(:task, 3)
+    visit "/tasks"
+    
+    find("a[href='/tasks?dir=desc&sort=priority']").click
+
+    tasks = Task.order("priority desc")
 
     within 'tr:nth-child(2)' do
-      expect(page).to have_text test_tasks[1].header
+      expect(page).to have_text tasks[1].header
+    end
+    
+    within 'tr:nth-child(3)' do
+      expect(page).to have_text tasks[2].header
+    end
+
+    find("a[href='/tasks?dir=asc&sort=priority']").click
+
+    tasks = Task.order("priority asc")
+
+    within 'tr:nth-child(2)' do
+      expect(page).to have_text tasks[1].header
+    end
+    
+    within 'tr:nth-child(3)' do
+      expect(page).to have_text tasks[2].header
     end
   end
 end
