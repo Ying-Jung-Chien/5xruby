@@ -1,7 +1,7 @@
 module TasksHelper
   def next_dir
     if params[:dir].present?
-      params[:dir].eql?('desc') ? 'asc' : 'desc'
+      session[:dir].eql?('desc') ? 'asc' : 'desc'
     else
       'desc'
     end

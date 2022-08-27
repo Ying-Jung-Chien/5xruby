@@ -92,6 +92,29 @@ RSpec.feature "Tasks", type: :feature do
     within 'tr:nth-child(3)' do
       expect(page).to have_text tasks[0].header
     end
+  end
 
+  scenario "search" do
+    create_list(:task, 28)
+    tasks = create_list(:task, 2, header:'abcdef')
+    
+    visit "/tasks"
+    
+    fill_in :search, with: 'cde'
+    click_button "Search"
+
+    within 'tr:nth-child(2)' do
+      expect(page).to have_text tasks[1].header
+    end
+
+    test_tasks = Task.where("status = 2").order("id asc")
+    puts test_tasks[1].header
+
+    choose(I18n.t('pending'))
+    click_button "Search"
+
+    within 'tr:nth-child(2)' do
+      expect(page).to have_text test_tasks[1].header
+    end
   end
 end

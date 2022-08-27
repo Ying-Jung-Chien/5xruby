@@ -20,6 +20,7 @@
   pending: 待處理
   processing: 進行中
   solved: 已完成
+  all: 全部
 
   user: 用戶
   supervisor: 管理者

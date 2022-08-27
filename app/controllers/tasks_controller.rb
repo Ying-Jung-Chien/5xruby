@@ -1,21 +1,49 @@
 class TasksController < ApplicationController
   def index
-    if !params[:option].present?
-      params[:option] = 3
+    if !params[:dir].present? && !session[:dir].present?
+      session[:dir] = 'asc'
+    elsif params[:dir].present? 
+      session[:dir] = params[:dir]
+    end
+    
+    if !params[:option].present? && !session[:option].present?
+      session[:option] = '3'
+    elsif params[:option].present? 
+      session[:option] = params[:option]
     end
 
-    if params[:option] != 3 && params[:search].present?
-      @tasks = Task.where("header LIKE ? AND status = ?", "%" + params[:search] + "%", params[:option])
+    if !params[:sort].present? && !session[:sort].present?
+      session[:sort] = 'id'
+    elsif params[:sort].present? 
+      session[:sort] = params[:sort]
+    end
+
+    # if session[:option] != '3' && params[:search].present?
+    #   @tasks = Task.where("header LIKE ? AND status = ?", "%" + params[:search] + "%", session[:option]).order("#{session[:sort]} #{session[:dir]}")
+    # elsif params[:search].present?
+    #   @tasks = Task.where("header LIKE ?", "%" + params[:search] + "%").order("#{session[:sort]} #{session[:dir]}")
+    # elsif session[:option] != '3'
+    #   @tasks = Task.where("status = ?", session[:option]).order("#{session[:sort]} #{session[:dir]}")
+    # elsif params[:sort].present?
+    #   @tasks = Task.order("#{params[:sort]} #{params[:dir]}")
+    # else
+    #   @tasks = Task.order("#{session[:sort]} #{session[:dir]}")
+    # end
+
+    if session[:option] != '3' && params[:search].present?
+      @tasks = Task.search(1, params, session)
     elsif params[:search].present?
-      @tasks = Task.where("header LIKE ?", "%" + params[:search] + "%")
-    elsif params[:option] != 3
-      @tasks = Task.where("status = ?", params[:option])
+      @tasks = Task.search(2, params, session)
+    elsif session[:option] != '3'
+      @tasks = Task.search(3, params, session)
     elsif params[:sort].present?
-      @tasks = Task.order("#{params[:sort]} #{params[:dir]}")
+      @tasks = Task.search(4, params, session)
     else
-      @tasks = Task.all
+      @tasks = Task.search(5, params, session)
     end
   end
+
+  
   
   def new
     @task = Task.new

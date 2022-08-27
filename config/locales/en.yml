@@ -52,6 +52,7 @@ en:
   pending: Pending
   processing: Processing
   solved: Solved
+  all: All
 
   user: User
   supervisor: Supervisor
