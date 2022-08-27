@@ -5,6 +5,27 @@ class TasksController < ApplicationController
     @tasks = tasks.order("#{session[:sort]} #{session[:dir]}")
   end
 
+  def assign(arg, value)
+    if !params[arg].present? && !session[arg].present?
+      session[arg] = value
+    elsif params[arg].present?
+      session[arg] = params[arg]
+    end
+  end
+
+  def search(method)
+    @paginated = Task.page(params[:page])
+    case method
+    when 1
+      @paginated.where("header LIKE ? AND status = ?", "%#{params[:search]}%", session[:option]).order("#{session[:sort]} #{session[:dir]}")
+    when 2
+      @paginated.where("status = ?", session[:option]).order("#{session[:sort]} #{session[:dir]}")
+    else
+      @paginated.where("header LIKE ?", "%#{params[:search]}%").order("#{session[:sort]} #{session[:dir]}")
+    end
+>>>>>>> complete step 17
+  end
+
   def new
     @task = Task.new
   end
