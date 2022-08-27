@@ -30,6 +30,8 @@ class TasksController < ApplicationController
     else
       Task.where("header LIKE ?", "%#{params[:search]}%").order("#{session[:sort]} #{session[:dir]}")
     end
+
+    # @tasks = Task.page(params[:page]).order("#{session[:sort]} #{session[:dir]}")
   end
 
   def new
