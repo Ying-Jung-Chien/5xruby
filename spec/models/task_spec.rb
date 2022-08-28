@@ -28,4 +28,18 @@ RSpec.describe Task, type: :model do
       it { is_expected.to validate_presence_of(:end_time) }
     end
   end
+
+  describe "Search" do
+    it 'finds a task by header' do
+      task = create(:task, header: 'test')
+      result = described_class.where(header: 'test')
+      expect(result).to eq([task])
+    end
+
+    it 'finds a task by status' do
+      task = create(:task, status: 2)
+      result = described_class.where(status: 2)
+      expect(result).to eq([task])
+    end
+  end
 end
