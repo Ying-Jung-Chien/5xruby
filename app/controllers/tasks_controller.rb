@@ -1,8 +1,7 @@
 class TasksController < ApplicationController
   def index
-    assign(:dir, 'asc')
-    assign(:option, '3')
-    assign(:sort, 'id')
+    h = { dir: 'asc', option: '3', sort: 'id' }
+    h.each { |key, value| assign(key, value) }
 
     tasks = if params[:search].blank?
               Task.all
@@ -60,7 +59,7 @@ class TasksController < ApplicationController
   end
 
   def assign(arg, value)
-    if !params[arg].present? && !session[arg].present?
+    if !request.query_string.present?
       session[arg] = value
     elsif params[arg].present?
       session[arg] = params[arg]
