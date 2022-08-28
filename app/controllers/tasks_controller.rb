@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   def index
-    h = { dir: 'asc', option: '3', sort: 'id' }
-    h.each { |key, value| assign(key, value) }
+    session_info = { dir: 'asc', option: '3', sort: 'id' }
+    session_info.each { |key, value| saved_by_session(key, value) }
 
     tasks = if params[:search].blank?
               Task.all
@@ -58,7 +58,7 @@ class TasksController < ApplicationController
     params.require(:task).permit(:header, :content, :priority, :status, :start_time, :end_time)
   end
 
-  def assign(arg, value)
+  def saved_by_session(arg, value)
     if !request.query_string.present?
       session[arg] = value
     elsif params[arg].present?
