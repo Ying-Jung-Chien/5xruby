@@ -93,4 +93,4 @@ end
 
 gem "kaminari", "~> 1.2"
 
-gem "tailwindcss-rails", "~> 2.0"
+gem "tailwindcss-rails"

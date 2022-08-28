@@ -1,38 +1,8 @@
 class TasksController < ApplicationController
   def index
-    assign(:dir, 'asc')
-    assign(:option, '3')
-    assign(:sort, 'id')
-
-    @tasks = if session[:option] != '3' && params[:search].present?
-               search(1)
-             elsif session[:option] != '3'
-               search(2)
-             else
-               search(3)
-             end
-  end
-
-  def assign(arg, value)
-    if !params[arg].present? && !session[arg].present?
-      session[arg] = value
-    elsif params[arg].present?
-      session[arg] = params[arg]
-    end
-  end
-
-  def search(method)
-    @paginated = Task.page(params[:page])
-    case method
-    when 1
-      @paginated.where("header LIKE ? AND status = ?", "%#{params[:search]}%", session[:option]).order("#{session[:sort]} #{session[:dir]}")
-    when 2
-      @paginated.where("status = ?", session[:option]).order("#{session[:sort]} #{session[:dir]}")
-    else
-      @paginated.where("header LIKE ?", "%#{params[:search]}%").order("#{session[:sort]} #{session[:dir]}")
-    end
-
-    # @tasks = Task.page(params[:page]).order("#{session[:sort]} #{session[:dir]}")
+    pre_assign_session
+    tasks = search_tasks
+    @tasks = tasks.order("#{session[:sort]} #{session[:dir]}")
   end
 
   def new
@@ -77,5 +47,24 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:header, :content, :priority, :status, :start_time, :end_time)
+  end
+
+  def pre_assign_session
+    session_info = { dir: 'asc', option: '3', sort: 'id' }
+    session_info.each { |key, value| saved_by_session(key, value) }
+  end
+
+  def saved_by_session(arg, value)
+    if !request.query_string.present?
+      session[arg] = value
+    elsif params[arg].present?
+      session[arg] = params[arg]
+    end
+  end
+
+  def search_tasks
+    tasks = Task.page(params[:page]).where("header LIKE ?", "%#{params[:search]}%")
+    tasks = tasks.where("status = ?", session[:option]) if session[:option] != '3'
+    tasks
   end
 end

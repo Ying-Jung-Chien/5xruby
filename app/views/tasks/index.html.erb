@@ -6,9 +6,7 @@
     <% end %>
 </div>
 
-<h1 class="ml-2 text-4xl font-semibold tracking-tight text-gray-900 dark:text-white"><%= t("task_list") %></h1>
-
-<div class="py-3 px-3 items-center">
+<div class="pt-5 pr-4 items-center text-right">
     <a href="/tasks/new" class="py-3 px-2 items-center text-sm font-medium text-center text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:ring-4 focus:outline-none">
         <%= t("add_task") %>
     </a>
@@ -22,29 +20,21 @@
         <%= submit_tag "Search", :class => "py-3 px-2 items-center text-sm font-medium text-center text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:ring-4 focus:outline-none" %>
         <% end %>
     </div>
+
     <div class="m-2 p-2 grid grid-cols-6">
         <div class="col-span-1"> Status : </div>
-        <div class="col-span-5">
-            <label>
-                <%= radio_button_tag :option, 3, session[:option] == '3'%>
-                <%= t('all') %>
-            </label>
-            <label>
-                <%= radio_button_tag :option, 2, session[:option] == '2'%>
-                <%= t('pending') %>
-            </label>
-            <label>
-                <%= radio_button_tag :option, 1, session[:option] == '1'%>
-                <%= t('processing') %>
-            </label>
-            <label>
-                <%= radio_button_tag :option, 0 , session[:option] == '0'%>
-                <%= t('solved') %>
-            </label>
+        <div class="col-span-5" data-controller="task">
+            <%= form_tag(tasks_path, method: :get, :id => 'status-form', :remote => true) do %>
+                <% Task::STATUA_OPTION_HASH.each do |key, value| %>
+                    <label data-action="click->task#change">
+                        <%= radio_button_tag :option, value, session[:option] == value%>
+                        <%= t(key) %>
+                    </label>
+                <% end %>
+                <%# <%= submit_tag "Submit" %>
+            <% end %>
         </div>
     </div>
-
-
 
     <div class="grid grid-cols-7">
         <% Task::SORT_COLUMN_LIST.each do |column_name| %>
@@ -55,42 +45,43 @@
             </div>
         <% end %>
     </div>
-    <% @tasks.each do |task| %>
-    <div class="m-5 p-2 max-w-3xl bg-white rounded-lg border-4 border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-        <div class="grid grid-cols-7 gap-5">
-        <div class="col-span-5">
-            <div class="grid grid-cols-4">
-            <div class="col-span-2">
-                <h6 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white"><%= task.header %></h5>
-            </div>
-            <div class="col-span-1">
-                <p class="mt-2 font-normal text-gray-500 dark:text-gray-400"><%= t('priority') %>:<%= priority2text(task.priority) %></p>
-            </div>
-            <div class="col-span-1">
-                <p class="mt-2 font-normal text-gray-500 dark:text-gray-400"><%= t('status') %>:<%= status2text(task.status) %></p>
-            </div>
-            </div>
-            <div class="rounded-lg max-h-16 border-2 border-gray-200">
-            <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"><%= task.content %></p>
+
+    <% @tasks.each_with_index  do |task, index | %>
+        <div id="task_<%= index %>" class="m-5 p-2 max-w-3xl bg-white rounded-lg border-4 border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <div class="grid grid-cols-7 gap-5">
+                <div class="col-span-5">
+                    <div class="grid grid-cols-4">
+                    <div class="col-span-2">
+                        <h6 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white"><%= task.header %></h5>
+                    </div>
+                    <div class="col-span-1">
+                        <p class="mt-2 font-normal text-gray-500 dark:text-gray-400"><%= t('priority') %>:<%= priority2text(task.priority) %></p>
+                    </div>
+                    <div class="col-span-1">
+                        <p class="mt-2 font-normal text-gray-500 dark:text-gray-400"><%= t('status') %>:<%= status2text(task.status) %></p>
+                    </div>
+                    </div>
+                    <div class="rounded-lg max-h-16 border-2 border-gray-200">
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"><%= task.content %></p>
+                    </div>
+                </div>
+                <div class="col-span-2 grid grid-rows-3">
+                    <div class="row-span-1 text-right">
+                        <div class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <%= link_to t("edit_task"), edit_task_path(task) %>
+                        </div>
+                        <div class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <%= link_to t("delete_task"), task_path(task), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
+                        </div>
+                        </div>
+                        <div class="row-span-2">
+                        <p class="font-normal text-gray-500 dark:text-gray-400"><%= t('build_time') %>:<%= task.created_at.to_formatted_s(:short) %></p>
+                        <p class="font-normal text-gray-500 dark:text-gray-400"><%= t('start_time') %>:<%= task.start_time.to_formatted_s(:short) %></p>
+                        <p class="font-normal text-gray-500 dark:text-gray-400"><%= t('end_time') %>&nbsp;&nbsp;:<%= task.end_time.to_formatted_s(:short) %></p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-span-2 grid grid-rows-3">
-            <div class="row-span-1 text-right">
-            <div class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <%= link_to t("edit_task"), edit_task_path(task) %>
-            </div>
-            <div class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <%= link_to t("delete_task"), task_path(task), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
-            </div>
-            </div>
-            <div class="row-span-2">
-            <p class="font-normal text-gray-500 dark:text-gray-400"><%= t('build_time') %>:<%= task.created_at.to_formatted_s(:short) %></p>
-            <p class="font-normal text-gray-500 dark:text-gray-400"><%= t('start_time') %>:<%= task.start_time.to_formatted_s(:short) %></p>
-            <p class="font-normal text-gray-500 dark:text-gray-400"><%= t('end_time') %>&nbsp;&nbsp;:<%= task.end_time.to_formatted_s(:short) %></p>
-            </div>
-        </div>
-        </div>
-    </div>
     <% end %>
     <%= paginate @tasks %>
 </div>

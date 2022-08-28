@@ -75,21 +75,21 @@ RSpec.feature "Tasks", type: :feature do
 
     tasks = Task.order("end_time desc")
 
-    within 'tr:nth-child(2)' do
+    within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
     
-    within 'tr:nth-child(3)' do
+    within '#task_2' do
       expect(page).to have_text tasks[2].header
     end
 
     find("a[href='/tasks?dir=asc&sort=end_time']").click
 
-    within 'tr:nth-child(2)' do
+    within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
     
-    within 'tr:nth-child(3)' do
+    within '#task_2' do
       expect(page).to have_text tasks[0].header
     end
   end
@@ -101,9 +101,9 @@ RSpec.feature "Tasks", type: :feature do
     visit "/tasks"
     
     fill_in :search, with: 'cde'
-    click_button "Search"
+    click_button I18n.t('search')
 
-    within 'tr:nth-child(2)' do
+    within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
   end
@@ -115,10 +115,11 @@ RSpec.feature "Tasks", type: :feature do
 
     test_tasks = Task.where("status = 2").order("id asc")
 
-    choose(I18n.t('pending'))
-    click_button "Search"
+    # choose(I18n.t('pending'))
+    # click_button 'Submit'
+    find('label', :text => I18n.t('pending')).click
 
-    within 'tbody > tr:nth-child(2)' do
+    within '#task_1' do
       expect(page).to have_text test_tasks[1].header
     end
   end
@@ -131,11 +132,11 @@ RSpec.feature "Tasks", type: :feature do
 
     tasks = Task.order("priority desc")
 
-    within 'tr:nth-child(2)' do
+    within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
     
-    within 'tr:nth-child(3)' do
+    within '#task_2' do
       expect(page).to have_text tasks[2].header
     end
 
@@ -143,11 +144,11 @@ RSpec.feature "Tasks", type: :feature do
 
     tasks = Task.order("priority asc")
 
-    within 'tr:nth-child(2)' do
+    within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
     
-    within 'tr:nth-child(3)' do
+    within '#task_2' do
       expect(page).to have_text tasks[2].header
     end
   end
