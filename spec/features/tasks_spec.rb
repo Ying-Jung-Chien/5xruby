@@ -101,7 +101,7 @@ RSpec.feature "Tasks", type: :feature do
     visit "/tasks"
     
     fill_in :search, with: 'cde'
-    click_button "Search"
+    click_button I18n.t('search')
 
     within 'tr:nth-child(2)' do
       expect(page).to have_text tasks[1].header
@@ -116,7 +116,7 @@ RSpec.feature "Tasks", type: :feature do
     test_tasks = Task.where("status = 2").order("id asc")
 
     choose(I18n.t('pending'))
-    click_button "Search"
+    click_button I18n.t('search')
 
     within 'tbody > tr:nth-child(2)' do
       expect(page).to have_text test_tasks[1].header
