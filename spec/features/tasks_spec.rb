@@ -92,6 +92,63 @@ RSpec.feature "Tasks", type: :feature do
     within 'tr:nth-child(3)' do
       expect(page).to have_text tasks[0].header
     end
+  end
 
+  scenario "search by header" do
+    create_list(:task, 28)
+    tasks = create_list(:task, 2, header:'abcdef')
+    
+    visit "/tasks"
+    
+    fill_in :search, with: 'cde'
+    click_button I18n.t('search')
+
+    within 'tr:nth-child(2)' do
+      expect(page).to have_text tasks[1].header
+    end
+  end
+
+  scenario "search by status" do
+    create_list(:task, 100)
+    
+    visit "/tasks"
+
+    test_tasks = Task.where("status = 2").order("id asc")
+
+    choose(I18n.t('pending'))
+    click_button I18n.t('search')
+
+    within 'tbody > tr:nth-child(2)' do
+      expect(page).to have_text test_tasks[1].header
+    end
+  end
+
+  scenario "order by priority" do
+    create_list(:task, 3)
+    visit "/tasks"
+    
+    find("a[href='/tasks?dir=desc&sort=priority']").click
+
+    tasks = Task.order("priority desc")
+
+    within 'tr:nth-child(2)' do
+      expect(page).to have_text tasks[1].header
+    end
+    
+    within 'tr:nth-child(3)' do
+      expect(page).to have_text tasks[2].header
+    end
+
+    find("a[href='/tasks?dir=asc&sort=priority']").click
+
+    tasks = Task.order("priority asc")
+
+    within 'tr:nth-child(2)' do
+      expect(page).to have_text tasks[1].header
+    end
+    
+    within 'tr:nth-child(3)' do
+      expect(page).to have_text tasks[2].header
+    end
   end
 end

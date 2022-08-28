@@ -10,6 +10,30 @@
 
 <%= link_to t("add_task"), new_task_path %>
 
+<%= form_tag(tasks_path, method: :get) do %>
+  <p> Search by header </p>
+  <%= text_field_tag(:search, params[:search]) %>
+  <p> Status </p>
+  <label>
+    <%= radio_button_tag :option, '3', session[:option] == '3'%>
+    <%= t('all') %>
+  </label>
+  <label>
+    <%= radio_button_tag :option, '2', session[:option] == '2'%>
+    <%= t('pending') %>
+  </label>
+  <label>
+    <%= radio_button_tag :option, '1', session[:option] == '1'%>
+    <%= t('processing') %>
+  </label>
+  <label>
+    <%= radio_button_tag :option, '0' , session[:option] == '0'%>
+    <%= t('solved') %>
+  </label>
+  <%= submit_tag t("search") %>
+<% end %>
+
+
 <table>
   <thead>
     <tr>

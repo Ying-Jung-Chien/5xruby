@@ -52,6 +52,8 @@ en:
   pending: Pending
   processing: Processing
   solved: Solved
+  all: All
+  search: Search
 
   user: User
   supervisor: Supervisor
