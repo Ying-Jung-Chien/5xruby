@@ -4,32 +4,15 @@ class TasksController < ApplicationController
     assign(:option, '3')
     assign(:sort, 'id')
 
-    @tasks = if session[:option] != '3' && params[:search].present?
-               search(1)
-             elsif session[:option] != '3'
-               search(2)
-             else
-               search(3)
-             end
-  end
+    tasks = if params[:search].blank?
+              Task.all
+            else
+              Task.where("header LIKE ?", "%#{params[:search]}%")
+            end
 
-  def assign(arg, value)
-    if !params[arg].present? && !session[arg].present?
-      session[arg] = value
-    elsif params[arg].present?
-      session[arg] = params[arg]
-    end
-  end
+    tasks = tasks.where("status = ?", session[:option]) if session[:option] != '3'
 
-  def search(method)
-    case method
-    when 1
-      Task.where("header LIKE ? AND status = ?", "%#{params[:search]}%", session[:option]).order("#{session[:sort]} #{session[:dir]}")
-    when 2
-      Task.where("status = ?", session[:option]).order("#{session[:sort]} #{session[:dir]}")
-    else
-      Task.where("header LIKE ?", "%#{params[:search]}%").order("#{session[:sort]} #{session[:dir]}")
-    end
+    @tasks = tasks.order("#{session[:sort]} #{session[:dir]}")
   end
 
   def new
@@ -74,5 +57,13 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:header, :content, :priority, :status, :start_time, :end_time)
+  end
+
+  def assign(arg, value)
+    if !params[arg].present? && !session[arg].present?
+      session[arg] = value
+    elsif params[arg].present?
+      session[arg] = params[arg]
+    end
   end
 end
