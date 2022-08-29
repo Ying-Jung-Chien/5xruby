@@ -1,13 +1,7 @@
-<div id="flash">
-    <% flash.each do |type, msg| %>
-    <div class="alert alert-info">
-        <%= msg %>
-    </div>
-    <% end %>
-</div>
+<%= render partial: "shared/flash" %>
 
 <div class="pt-5 pr-4 items-center text-right">
-    <a href="/tasks/new" class="py-3 px-2 items-center text-sm font-medium text-center text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:ring-4 focus:outline-none">
+    <a href="/tasks/new" data-turbo-frame="modal" class="py-3 px-2 items-center text-sm font-medium text-center text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:ring-4 focus:outline-none">
         <%= t("add_task") %>
     </a>
 </div>
@@ -68,7 +62,7 @@
                 <div class="col-span-2 grid grid-rows-3">
                     <div class="row-span-1 text-right">
                         <div class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            <%= link_to t("edit_task"), edit_task_path(task) %>
+                            <%= link_to t("edit_task"), edit_task_path(task), data: { turbo_frame: "modal" } %>
                         </div>
                         <div class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             <%= link_to t("delete_task"), task_path(task), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
