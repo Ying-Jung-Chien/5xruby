@@ -108,7 +108,7 @@ RSpec.feature "Tasks", type: :feature do
     end
   end
 
-  scenario "search by status", js: true do
+  scenario "search by status" do
     create_list(:task, 100)
     
     visit "/tasks"
