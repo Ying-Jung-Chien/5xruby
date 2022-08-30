@@ -5,6 +5,5 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-100.times do
-    FactoryBot.create(:task)
-end
+
+tasks = Task.where("id <= 30 AND id < 40")
