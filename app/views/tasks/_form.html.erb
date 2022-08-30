@@ -1,39 +1,113 @@
 <%= form_for(task) do |f| %>
-  <div class="form-group <%= (f.object.errors[:header].any?)? "has-error" : "" %>">
-    <%= f.label :header, t("header"), :class => "control-label" %>
-    <%= f.text_field :header, :class => "form-control" %>
-
-    <% if f.object.errors[:header] %>
-      <span class="help-block"><%= safe_join(f.object.errors[:header], "、") %></span>
-    <% end %>
+  <div class="m-3">
+    <%= f.label :header, t("header"), style: "display: block", class: "form-label" %>
+    <%= f.text_field :header, class: "form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %>
+    <div style="color: red">
+      <% if task.errors.include?(:header) %>
+          <% task.errors.full_messages_for(:header).each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+      <% end %>
+    </div>
   </div>
 
-  <div class="form-group <%= (f.object.errors[:content].any?)? "has-error" : "" %>">
-    <%= f.label :content, t("content"), :class => "control-label" %>
-    <%= f.text_field :content, :class => "form-control" %>
-
-    <% if f.object.errors[:content] %>
-      <span class="help-block"><%= safe_join(f.object.errors[:content], "、") %></span>
-    <% end %>
+  <div class="m-3">
+    <%= f.label :content, t("content"), style: "display: block", class: "form-label" %>
+    <%= f.text_area :content, class: "form-control block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" %>
+    <div style="color: red">
+      <% if task.errors.include?(:content) %>
+          <% task.errors.full_messages_for(:content).each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+ 
+  <div class="m-3">
+    <div>
+      <div class="flex">
+        <div class="flex m-3 items-center">
+          <%= f.label :priority, t("priority") %>
+        </div>
+        <div class="flex m-3 items-center">
+          <%= f.radio_button :priority, 2 %>
+          <%= f.label :priority, t("high"), :class => "ml-1" %>
+        </div>
+        <div class="flex m-3 items-center">
+          <%= f.radio_button :priority, 1 %>
+          <%= f.label :priority, t("medium"), :class => "ml-1" %>
+        </div>
+        <div class="flex m-3 items-center">
+          <%= f.radio_button :priority, 0 %>
+          <%= f.label :priority, t("low"), :class => "ml-1" %>
+        </div>
+      </div>
+    </div>
+    <div style="color: red">
+      <% if task.errors.include?(:priority) %>
+          <% task.errors.full_messages_for(:priority).each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+      <% end %>
+    </div>
   </div>
 
-  <%= f.label :priority, t("priority") %>
-  <%= f.select :priority, [[t("high"), 2], [t("medium"), 1], [t("low"), 0]] %> <br />
-
-  <%= f.label :status, t("status") %>
-  <%= f.select :status, [[t("pending"), 2], [t("processing"), 1], [t("solved"), 0]] %> <br />
-
-  <%= f.label :start_time, t("start_time") %>
-  <%= f.datetime_field :start_time %> <br />
-
-  <div class="form-group <%= (f.object.errors[:end_time].any?)? "has-error" : "" %>">
-    <%= f.label :end_time, t("end_time"), :class => "control-label" %>
-    <%= f.datetime_field :end_time, :class => "form-control" %>
-
-    <% if f.object.errors[:end_time] %>
-      <span class="help-block"><%= safe_join(f.object.errors[:end_time], "、") %></span>
-    <% end %>
+  <div class="m-3">
+    <div>
+      <div class="flex">
+        <div class="flex m-3 items-center">
+          <%= f.label :status, t("status"), :class => "ml-1" %>
+        </div>
+        <div class="flex m-3 items-center">
+          <%= f.radio_button :status, 2 %>
+          <%= f.label :status, t("pending"), :class => "ml-1" %>
+        </div>
+        <div class="flex m-3 items-center">
+          <%= f.radio_button :status, 1 %>
+          <%= f.label :status, t("processing"), :class => "ml-1" %>
+        </div>
+        <div class="flex m-3 items-center">
+          <%= f.radio_button :status, 0 %>
+          <%= f.label :status, t("solved"), :class => "ml-1" %>
+        </div>
+      </div>
+    </div>
+    <div style="color: red">
+      <% if task.errors.include?(:status) %>
+          <% task.errors.full_messages_for(:status).each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+      <% end %>
+    </div>
   </div>
 
-  <%= f.submit t("submit") %>
+  <div class="grid grid-cols-2">
+    <div class="m-3 col-span-1">
+      <%= f.label :start_time, t("start_time"), style: "display: block", class: "form-label" %>
+      <%= f.datetime_field :start_time, :class => "form-control" %>
+      <div style="color: red">
+        <% if task.errors.include?(:start_time) %>
+            <% task.errors.full_messages_for(:start_time).each do |error_message| %>
+              <%= error_message %>.
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="m-3 col-span-1">
+      <%= f.label :end_time, t("end_time"), style: "display: block", class: "form-label" %>
+      <%= f.datetime_field :end_time, :class => "form-control" %>
+      <div style="color: red">
+        <% if task.errors.include?(:end_time) %>
+            <% task.errors.full_messages_for(:end_time).each do |error_message| %>
+              <%= error_message %>.
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-right">
+    <%= f.submit t("submit"), class:"m-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center" %>
+  </div>
 <% end %>

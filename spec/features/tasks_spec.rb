@@ -7,20 +7,20 @@ RSpec.feature "Tasks", type: :feature do
 
     find("a[href='/tasks/new']").click
 
-    expect(page).to have_css('.add_task')
+    expect(page).to have_selector(:id, 'modal')
 
     within("#new_task") do # 填表單
       fill_in I18n.t("header"), with: "test_spec"
       fill_in I18n.t("content"), with: "12345678"
-      find('#task_priority').find(:xpath, 'option[1]').select_option
-      find('#task_status').find(:xpath, 'option[2]').select_option
+      choose('task[priority]',option:0)
+      choose('task[status]',option:0)
       fill_in I18n.t("start_time"), with: "2022-08-22T14:39:30Z"
       fill_in I18n.t("end_time"), with: "2022-08-23T14:39:30Z"
     end
 
     click_button I18n.t("submit")
 
-    expect(page).to have_text("Success!")
+    expect(page).to have_text("Task was successfully created.")
 
     task = Task.last
     expect(task.header).to eq("test_spec")
@@ -37,15 +37,15 @@ RSpec.feature "Tasks", type: :feature do
     within(".edit_task") do # 填表單
       fill_in I18n.t("header"), with: "edit"
       fill_in I18n.t("content"), with: "12345678"
-      find('#task_priority').find(:xpath, 'option[1]').select_option
-      find('#task_status').find(:xpath, 'option[2]').select_option
+      choose('task[priority]',option:0)
+      choose('task[status]',option:0)
       fill_in I18n.t("start_time"), with: "2022-08-22T14:39:30Z"
       fill_in I18n.t("end_time"), with: "2022-08-23T14:39:30Z"
     end
 
     click_button I18n.t("submit")
 
-    expect(page).to have_text("Success!")
+    expect(page).to have_text("Task was successfully edited.")
 
     new_task = Task.find(task.id)
     expect(new_task.header).to eq("edit")
@@ -75,21 +75,21 @@ RSpec.feature "Tasks", type: :feature do
 
     tasks = Task.order("end_time desc")
 
-    within 'tr:nth-child(2)' do
+    within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
     
-    within 'tr:nth-child(3)' do
+    within '#task_2' do
       expect(page).to have_text tasks[2].header
     end
 
     find("a[href='/tasks?dir=asc&sort=end_time']").click
 
-    within 'tr:nth-child(2)' do
+    within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
     
-    within 'tr:nth-child(3)' do
+    within '#task_2' do
       expect(page).to have_text tasks[0].header
     end
   end
@@ -103,7 +103,7 @@ RSpec.feature "Tasks", type: :feature do
     fill_in :search, with: 'cde'
     click_button I18n.t('search')
 
-    within 'tr:nth-child(2)' do
+    within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
   end
@@ -114,11 +114,9 @@ RSpec.feature "Tasks", type: :feature do
     visit "/tasks"
 
     test_tasks = Task.where("status = 2").order("id asc")
-
-    choose(I18n.t('pending'))
-    click_button I18n.t('search')
-
-    within 'tbody > tr:nth-child(2)' do
+    find('label', :text => I18n.t('pending')).click
+    visit "/tasks?option=2"
+    within '#task_1' do
       expect(page).to have_text test_tasks[1].header
     end
   end
@@ -131,11 +129,11 @@ RSpec.feature "Tasks", type: :feature do
 
     tasks = Task.order("priority desc")
 
-    within 'tr:nth-child(2)' do
+    within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
     
-    within 'tr:nth-child(3)' do
+    within '#task_2' do
       expect(page).to have_text tasks[2].header
     end
 
@@ -143,11 +141,11 @@ RSpec.feature "Tasks", type: :feature do
 
     tasks = Task.order("priority asc")
 
-    within 'tr:nth-child(2)' do
+    within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
     
-    within 'tr:nth-child(3)' do
+    within '#task_2' do
       expect(page).to have_text tasks[2].header
     end
   end
