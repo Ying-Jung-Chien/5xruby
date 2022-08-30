@@ -11,7 +11,7 @@
         <%= form_tag(tasks_path, method: :get) do %>
         <p> Search by header </p>
         <%= text_field_tag(:search, params[:search]) %>
-        <%= submit_tag "Search", :class => "py-3 px-2 items-center text-sm font-medium text-center text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:ring-4 focus:outline-none" %>
+        <%= submit_tag t("search"), :class => "py-3 px-2 items-center text-sm font-medium text-center text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:ring-4 focus:outline-none" %>
         <% end %>
     </div>
 

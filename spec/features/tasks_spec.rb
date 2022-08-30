@@ -114,12 +114,8 @@ RSpec.feature "Tasks", type: :feature do
     visit "/tasks"
 
     test_tasks = Task.where("status = 2").order("id asc")
-
-    choose('option',option:2)
-    # choose(I18n.t('pending'))
-    # click_button 'Submit'
-    # find('label', :text => I18n.t('pending')).click
-
+    find('label', :text => I18n.t('pending')).click
+    visit "/tasks?option=2"
     within '#task_1' do
       expect(page).to have_text test_tasks[1].header
     end

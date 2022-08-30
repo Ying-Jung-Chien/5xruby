@@ -22,15 +22,27 @@
       <% end %>
     </div>
   </div>
-
+ 
   <div class="m-3">
-    <%= f.label :priority, t("priority") %>
-    <%= f.radio_button :priority, 2 %>
-    <%= f.label :priority, t("high") %>
-    <%= f.radio_button :priority, 1 %>
-    <%= f.label :priority, t("medium") %>
-    <%= f.radio_button :priority, 0 %>
-    <%= f.label :priority, t("low") %>
+    <div>
+      <div class="flex">
+        <div class="flex m-3 items-center">
+          <%= f.label :priority, t("priority") %>
+        </div>
+        <div class="flex m-3 items-center">
+          <%= f.radio_button :priority, 2 %>
+          <%= f.label :priority, t("high"), :class => "ml-1" %>
+        </div>
+        <div class="flex m-3 items-center">
+          <%= f.radio_button :priority, 1 %>
+          <%= f.label :priority, t("medium"), :class => "ml-1" %>
+        </div>
+        <div class="flex m-3 items-center">
+          <%= f.radio_button :priority, 0 %>
+          <%= f.label :priority, t("low"), :class => "ml-1" %>
+        </div>
+      </div>
+    </div>
     <div style="color: red">
       <% if task.errors.include?(:priority) %>
           <% task.errors.full_messages_for(:priority).each do |error_message| %>
@@ -41,13 +53,25 @@
   </div>
 
   <div class="m-3">
-    <%= f.label :status, t("status") %>
-    <%= f.radio_button :status, "2" %>
-    <%= f.label :status, t("pending") %>
-    <%= f.radio_button :status, "1" %>
-    <%= f.label :status, t("processing") %>
-    <%= f.radio_button :status, "0" %>
-    <%= f.label :status, t("solved") %>
+    <div>
+      <div class="flex">
+        <div class="flex m-3 items-center">
+          <%= f.label :status, t("status"), :class => "ml-1" %>
+        </div>
+        <div class="flex m-3 items-center">
+          <%= f.radio_button :status, 2 %>
+          <%= f.label :status, t("pending"), :class => "ml-1" %>
+        </div>
+        <div class="flex m-3 items-center">
+          <%= f.radio_button :status, 1 %>
+          <%= f.label :status, t("processing"), :class => "ml-1" %>
+        </div>
+        <div class="flex m-3 items-center">
+          <%= f.radio_button :status, 0 %>
+          <%= f.label :status, t("solved"), :class => "ml-1" %>
+        </div>
+      </div>
+    </div>
     <div style="color: red">
       <% if task.errors.include?(:status) %>
           <% task.errors.full_messages_for(:status).each do |error_message| %>
