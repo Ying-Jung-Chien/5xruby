@@ -12,13 +12,16 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
 
+    respond_to do |format|
       if @task.save
-        # 成功
-        redirect_to tasks_path, notice: "Success!"
+        format.html { redirect_to tasks_path, notice: "Task was successfully created." }
+        format.json { render :show, status: :created, location: @task }
       else
-        # 失敗
-        render :new, status: :unprocessable_entity
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+        format.turbo_stream { render :form_update, status: :unprocessable_entity }
       end
+    end
   end
 
   def edit
@@ -28,13 +31,16 @@ class TasksController < ApplicationController
   def update
     @task = Task.find_by(id: params[:id])
 
+    respond_to do |format|
       if @task.update(task_params)
-        # 成功
-        redirect_to tasks_path, notice: "Success!"
+        format.html { redirect_to tasks_path, notice: "Task was successfully edited." }
+        format.json { render :show, status: :created, location: @task }
       else
-        # 失敗
-        render :edit, status: :unprocessable_entity
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+        format.turbo_stream { render :form_update, status: :unprocessable_entity }
       end
+    end
   end
 
   def destroy

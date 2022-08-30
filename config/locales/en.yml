@@ -41,6 +41,7 @@ en:
   start_time: Start Time
   end_time: End Time
   build: Build Time
+  created_at: Build Time
   management: Management
   edit_task: Edit Task
   delete_task: Delete Task

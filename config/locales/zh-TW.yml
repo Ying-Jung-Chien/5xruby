@@ -9,6 +9,7 @@
   start_time: 開始時間
   end_time: 結束時間
   build: 建立時間
+  created_at: 建立時間
   management: 管理
   edit_task: 編輯任務
   delete_task: 刪除任務
