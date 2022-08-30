@@ -18,7 +18,7 @@
     <div class="m-2 p-2 grid grid-cols-6">
         <div class="col-span-1"> Status : </div>
         <div class="col-span-5" data-controller="task">
-            <%= form_tag(tasks_path, method: :get, :id => 'status-form', :remote => true) do %>
+            <%= form_tag(tasks_path, method: :get, :id => 'status-form', :remote => true, data: {target: "task.form"}) do %>
                 <% Task::STATUA_OPTION_HASH.each do |key, value| %>
                     <label data-action="click->task#change">
                         <%= radio_button_tag :option, value, session[:option] == value%>
