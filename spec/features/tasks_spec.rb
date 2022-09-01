@@ -98,8 +98,7 @@ RSpec.feature "Tasks", type: :feature do
     create_list(:task, 28)
     tasks = create_list(:task, 2, header:'abcdef')
     
-    visit "/tasks"
-    
+    visit "/tasks" 
     fill_in :search, with: 'cde'
     click_button I18n.t('search')
 

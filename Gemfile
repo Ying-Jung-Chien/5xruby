@@ -50,6 +50,11 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+gem "kaminari", "~> 1.2"
+
+gem "tailwindcss-rails"
+
+gem 'inline_svg'
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -60,8 +65,8 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'byebug'
   gem "debug", platforms: %i[mri mingw x64_mingw]
-  gem "selenium-webdriver"
-  gem "webdrivers"
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :development do
@@ -75,24 +80,10 @@ group :development do
   # gem "spring"
 end
 
-group :test, :development do
-  gem 'capybara'
-  gem 'factory_bot_rails'
-  gem 'faker'
-  gem "rspec-rails"
-end
-
 group :test do
   gem 'shoulda-matchers', require: false
+  gem "selenium-webdriver"
+  gem "webdrivers"
+  gem 'capybara'
+  gem "rspec-rails"
 end
-
-group :production do    
-    gem 'heroku-deflater'   
-    gem 'rails_12factor'
-end
-
-gem "kaminari", "~> 1.2"
-
-gem "tailwindcss-rails"
-
-gem 'inline_svg'
