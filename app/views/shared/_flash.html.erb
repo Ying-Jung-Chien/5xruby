@@ -1,13 +1,13 @@
 <% flash.each do |type, msg| %>
   <div id="alert" data-controller="flash" data-flash-target="window" class="flex p-4 mb-4 bg-green-100 border-t-4 border-green-500 dark:bg-green-200" role="alert">
-      <%= inline_svg_tag "flash.svg" %>
+      <%= inline_svg_tag "flash.svg", class:"flex-shrink-0 w-5 h-5 text-green-700"  %>
       <div class="ml-3 text-sm font-medium text-green-700">
           <%= msg %>
       </div>
       
       <button type="button" data-action="flash#dismiss" class="ml-auto -mx-1.5 -my-1.5 bg-green-100 dark:bg-green-200 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 dark:hover:bg-green-300 inline-flex h-8 w-8"  data-dismiss-target="#alert-border-3" aria-label="Close">
         <span class="sr-only">Dismiss</span>
-        <%= inline_svg_tag "flash_dismiss.svg" %>
+        <%= inline_svg_tag "flash_dismiss.svg", class:"w-5 h-5" %>
       </button>
   </div>
 <% end %>
