@@ -63,6 +63,7 @@
       </div>
     </nav>  
     <%= turbo_frame_tag "modal", target: "_top" %>
+    <%= render partial: "shared/flash" %>
     <%= yield %>
   </body>
 </html>
