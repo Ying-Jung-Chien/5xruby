@@ -66,3 +66,6 @@ en:
   delete_user: Delete User
   add_user: Add User
   back_to_user_list: Back to user list
+
+  language: Language
+  search_by_header: Search by header

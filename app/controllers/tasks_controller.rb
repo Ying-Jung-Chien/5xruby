@@ -10,10 +10,11 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    # @task = Task.new(task_params)
+    temp_user = User.first
 
     respond_to do |format|
-      if @task.save
+      if temp_user.tasks.create(task_params) # @task.save
         format.html { redirect_to tasks_path, notice: "Task was successfully created." }
         format.json { render :show, status: :created, location: @task }
       else
