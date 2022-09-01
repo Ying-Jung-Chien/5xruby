@@ -9,5 +9,5 @@ Rails.application.routes.draw do
 
   get    'login'   => 'login#new'
   post   'login'   => 'login#create'
-  delete 'logout'  => 'login#destroy'
+  get 'logout'  => 'login#destroy'
 end
