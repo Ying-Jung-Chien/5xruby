@@ -12,7 +12,7 @@ class TasksController < ApplicationController
   def create
     temp_user = User.first
     task = temp_user.tasks.build(task_params)
-    
+
     respond_to do |format|
       if task.save
         format.html { redirect_to tasks_path, notice: "Task was successfully created." }
