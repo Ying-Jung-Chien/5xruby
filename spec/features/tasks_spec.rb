@@ -4,11 +4,10 @@ require 'webdrivers'
 RSpec.feature "Tasks", type: :feature do
   scenario "creates a new task" do
     visit "/tasks"
-
     find("a[href='/tasks/new']").click
-
     expect(page).to have_selector(:id, 'modal')
 
+    create(:user)
     within("#new_task") do # 填表單
       fill_in I18n.t("header"), with: "test_spec"
       fill_in I18n.t("content"), with: "12345678"
@@ -17,9 +16,7 @@ RSpec.feature "Tasks", type: :feature do
       fill_in I18n.t("start_time"), with: "2022-08-22T14:39:30Z"
       fill_in I18n.t("end_time"), with: "2022-08-23T14:39:30Z"
     end
-
     click_button I18n.t("submit")
-
     expect(page).to have_text("Task was successfully created.")
 
     task = Task.last
@@ -28,10 +25,9 @@ RSpec.feature "Tasks", type: :feature do
 
   scenario "edits a task" do
     task = create(:task)
+
     visit "/tasks"
-
     find("a[href='/tasks/#{task.id}/edit']").click
-
     expect(page).to have_content(I18n.t("edit_task"))
 
     within(".edit_task") do # 填表單
@@ -42,9 +38,7 @@ RSpec.feature "Tasks", type: :feature do
       fill_in I18n.t("start_time"), with: "2022-08-22T14:39:30Z"
       fill_in I18n.t("end_time"), with: "2022-08-23T14:39:30Z"
     end
-
     click_button I18n.t("submit")
-
     expect(page).to have_text("Task was successfully edited.")
 
     new_task = Task.find(task.id)
@@ -53,28 +47,21 @@ RSpec.feature "Tasks", type: :feature do
 
   scenario "deletes a task" do
     task = create(:task)
-    visit "/tasks"
 
+    visit "/tasks"
     expect(Task.count).to eq(1)
 
     find("a[href='/tasks/#{task.id}']").click
-
     expect(Task.count).to eq(0)
     expect(page).to have_text("Success!")
-
-    # accept_alert 'Confirm' do
-    #   find("a[href='/tasks/#{task.id}']").click
-    # end
   end
 
   scenario "order by end time" do
     create_list(:task, 3)
+
     visit "/tasks"
-    
     find("a[href='/tasks?dir=desc&sort=end_time']").click
-
     tasks = Task.order("end_time desc")
-
     within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
@@ -84,11 +71,10 @@ RSpec.feature "Tasks", type: :feature do
     end
 
     find("a[href='/tasks?dir=asc&sort=end_time']").click
-
     within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
-    
+
     within '#task_2' do
       expect(page).to have_text tasks[0].header
     end
@@ -98,11 +84,9 @@ RSpec.feature "Tasks", type: :feature do
     create_list(:task, 28)
     tasks = create_list(:task, 2, header:'abcdef')
     
-    visit "/tasks"
-    
+    visit "/tasks" 
     fill_in :search, with: 'cde'
     click_button I18n.t('search')
-
     within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
@@ -112,7 +96,6 @@ RSpec.feature "Tasks", type: :feature do
     create_list(:task, 100)
     
     visit "/tasks"
-
     test_tasks = Task.where("status = 2").order("id asc")
     find('label', :text => I18n.t('pending')).click
     visit "/tasks?option=2"
@@ -123,12 +106,11 @@ RSpec.feature "Tasks", type: :feature do
 
   scenario "order by priority" do
     create_list(:task, 3)
+
     visit "/tasks"
-    
     find("a[href='/tasks?dir=desc&sort=priority']").click
 
     tasks = Task.order("priority desc")
-
     within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
@@ -138,9 +120,7 @@ RSpec.feature "Tasks", type: :feature do
     end
 
     find("a[href='/tasks?dir=asc&sort=priority']").click
-
     tasks = Task.order("priority asc")
-
     within '#task_1' do
       expect(page).to have_text tasks[1].header
     end

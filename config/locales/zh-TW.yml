@@ -34,3 +34,6 @@
   edit_user: 編輯用戶
   delete_user: 刪除用戶
   back_to_user_list: 返回用戶列表
+
+  language: 語言
+  search_by_header: 以標題搜尋

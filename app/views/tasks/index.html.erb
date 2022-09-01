@@ -9,14 +9,14 @@
 <div class="flex flex-col items-center">
     <div class="m-2 p-2">
         <%= form_tag(tasks_path, method: :get) do %>
-        <p> Search by header </p>
+        <p> <%= t("search_by_header") %> </p>
         <%= text_field_tag(:search, params[:search]) %>
         <%= submit_tag t("search"), :class => "py-3 px-2 items-center text-sm font-medium text-center text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:ring-4 focus:outline-none" %>
         <% end %>
     </div>
 
     <div class="m-2 p-2 grid grid-cols-6">
-        <div class="col-span-1"> Status : </div>
+        <div class="col-span-1"> <%= t("status") %> : </div>
         <div class="col-span-5" data-controller="task">
             <%= form_tag(tasks_path, method: :get, :id => 'status-form', :remote => true, data: {target: "task.form"}) do %>
                 <% Task::STATUA_OPTION_HASH.each do |key, value| %>
@@ -35,7 +35,7 @@
             <div class="py-3 px-3 col-span-1 flex items-center">
                 <a href="/tasks?dir=<%= next_dir %>&sort=<%= column_name %>" class="py-3 px-2 inline-flex items-center text-sm font-medium text-center text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     <%= t(column_name) %>
-                    <%= inline_svg_tag "sort.svg" %>
+                    <%= inline_svg_tag "sort.svg", class:"ml-1 w-3 h-3" %>
                 </a>
             </div>
         <% end %>

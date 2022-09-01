@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-  # belongs_to :user
+  belongs_to :user
   # has_many :tags
 
   SORT_COLUMN_LIST = %w[header content priority status start_time end_time created_at].freeze

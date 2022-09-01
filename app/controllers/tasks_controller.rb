@@ -10,10 +10,11 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    temp_user = User.first
+    task = temp_user.tasks.build(task_params)
 
     respond_to do |format|
-      if @task.save
+      if task.save
         format.html { redirect_to tasks_path, notice: "Task was successfully created." }
         format.json { render :show, status: :created, location: @task }
       else
@@ -69,7 +70,7 @@ class TasksController < ApplicationController
   end
 
   def search_tasks
-    tasks = Task.page(params[:page]).where("header LIKE ?", "%#{params[:search]}%")
+    tasks = Task.includes(:user).page(params[:page]).where("header LIKE ?", "%#{params[:search]}%")
     tasks = tasks.where("status = ?", session[:option]) if session[:option] != '3'
     tasks
   end
