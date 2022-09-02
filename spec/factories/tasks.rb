@@ -6,6 +6,6 @@ FactoryBot.define do
     status { Faker::Number.between(from: 0, to: 2) }
     start_time { Faker::Time.between(from: DateTime.now - 1, to: DateTime.now + 1) }
     end_time { Faker::Time.between(from: DateTime.now + 1, to: DateTime.now + 5) }
-    association :user, factory: :user
+    # association @current_user, factory: :user
   end
 end

@@ -38,7 +38,8 @@ RSpec.feature "Tasks", type: :feature do
   end
 
   scenario "edits a task" do
-    task = create(:task)
+    task = build(:task)
+    @test_user.tasks << task
 
     visit "/tasks"
     find("a[href='/tasks/#{task.id}/edit']").click
@@ -60,7 +61,8 @@ RSpec.feature "Tasks", type: :feature do
   end
 
   scenario "deletes a task" do
-    task = create(:task)
+    task = build(:task)
+    @test_user.tasks << task
 
     visit "/tasks"
     expect(Task.count).to eq(1)
@@ -71,7 +73,8 @@ RSpec.feature "Tasks", type: :feature do
   end
 
   scenario "order by end time" do
-    create_list(:task, 3)
+    tasks = build_list(:task, 3)
+    @test_user.tasks << tasks
 
     visit "/tasks"
     find("a[href='/tasks?dir=desc&sort=end_time']").click
@@ -95,8 +98,9 @@ RSpec.feature "Tasks", type: :feature do
   end
 
   scenario "search by header" do
-    create_list(:task, 28)
-    tasks = create_list(:task, 2, header:'abcdef')
+    @test_user.tasks << build_list(:task, 28)
+    tasks = build_list(:task, 2, header:'abcdef')
+    @test_user.tasks << tasks
     
     visit "/tasks" 
     fill_in :search, with: 'cde'
@@ -107,7 +111,7 @@ RSpec.feature "Tasks", type: :feature do
   end
 
   scenario "search by status" do
-    create_list(:task, 100)
+    @test_user.tasks << build_list(:task, 100)
     
     visit "/tasks"
     test_tasks = Task.where("status = 2").order("id asc")
@@ -119,7 +123,7 @@ RSpec.feature "Tasks", type: :feature do
   end
 
   scenario "order by priority" do
-    create_list(:task, 3)
+    @test_user.tasks << build_list(:task, 3)
 
     visit "/tasks"
     find("a[href='/tasks?dir=desc&sort=priority']").click

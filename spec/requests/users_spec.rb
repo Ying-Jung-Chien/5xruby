@@ -17,6 +17,15 @@ RSpec.describe "users", type: :request do
     }
   }
 
+  before(:all) do
+    test_user = create(:user)
+    @request.session[:user_id] = test_user.id
+  end
+
+  after(:all) do
+    test_user.destroy
+  end
+
   describe "GET /index" do
     it "should assgins all users to @users" do
       user = create(:user)
