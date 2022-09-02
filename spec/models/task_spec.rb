@@ -1,11 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  before do
+  before(:each) do
     @test_user = create(:user)
     @task = build(:task)
     @test_user.tasks << @task
   end
+
+  after(:each) do
+    @test_user.destroy
+  end
+
   subject {@task}
 
   describe "Validations" do
@@ -36,7 +41,7 @@ RSpec.describe Task, type: :model do
 
   describe "Search" do
     it 'finds a task by header' do
-      task = build(:task, header: 'test')
+      task = build(:task, header: 'test', status: 3)
       @test_user.tasks << task
       result = described_class.where(header: 'test')
       expect(result).to eq([task])

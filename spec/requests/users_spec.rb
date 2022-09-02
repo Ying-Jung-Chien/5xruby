@@ -18,19 +18,20 @@ RSpec.describe "users", type: :request do
   }
 
   before(:all) do
-    test_user = create(:user)
-    @request.session[:user_id] = test_user.id
+    @test_user = create(:user)
+    # @request.session[:user_id] = test_user.id
+    post login_url, params: { "login[name]": @test_user.name, "login[password]": @test_user.password }
   end
 
   after(:all) do
-    test_user.destroy
+    @test_user.destroy
   end
 
   describe "GET /index" do
     it "should assgins all users to @users" do
       user = create(:user)
       get users_url
-      expect(assigns(:users)).to eq [user]
+      expect(assigns(:users)).to eq [@test_user, user]
     end
   end
 
