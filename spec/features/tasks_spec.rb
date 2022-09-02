@@ -2,12 +2,26 @@ require 'rails_helper'
 require 'webdrivers'
 
 RSpec.feature "Tasks", type: :feature do
+  before(:each) do
+    visit "/login"
+    @test_user = create(:user, name:"task_spec", password:"1234abcD")
+    within(".login") do # 填表單
+      fill_in I18n.t("name"), with: "task_spec"
+      fill_in I18n.t("password"), with: "1234abcD"
+    end
+    click_button I18n.t("login")
+    expect(page).to have_text("Logged in successfully")
+  end
+
+  after(:each) do
+    @test_user.destroy
+  end
+  
   scenario "creates a new task" do
     visit "/tasks"
     find("a[href='/tasks/new']").click
     expect(page).to have_selector(:id, 'modal')
 
-    create(:user)
     within("#new_task") do # 填表單
       fill_in I18n.t("header"), with: "test_spec"
       fill_in I18n.t("content"), with: "12345678"
