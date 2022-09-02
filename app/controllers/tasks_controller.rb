@@ -14,7 +14,6 @@ class TasksController < ApplicationController
   end
 
   def create
-    # temp_user = User.first
     task = current_user.tasks.build(task_params)
 
     respond_to do |format|

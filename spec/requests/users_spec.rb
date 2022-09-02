@@ -19,7 +19,6 @@ RSpec.describe "users", type: :request do
 
   before(:all) do
     @test_user = create(:user)
-    # @request.session[:user_id] = test_user.id
     post login_url, params: { "login[name]": @test_user.name, "login[password]": @test_user.password }
   end
 
