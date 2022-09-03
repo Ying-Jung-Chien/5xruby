@@ -57,7 +57,7 @@ class TasksController < ApplicationController
   end
 
   def pre_assign_session
-    session_info = { dir: 'asc', option: '3', sort: 'id' }
+    session_info = { dir: 'asc', option: '3', sort: 'id', search_by: 'header' }
     session_info.each { |key, value| saved_by_session(key, value) }
   end
 
@@ -70,7 +70,9 @@ class TasksController < ApplicationController
   end
 
   def search_tasks
-    tasks = Task.includes(:user).page(params[:page]).where("header LIKE ? AND user_id=?", "%#{params[:search]}%", current_user.id)
+    tasks = Task.includes(:user).page(params[:page]).where("user_id = ?", current_user.id)
+    tasks = tasks.where("header LIKE ?", "%#{params[:search]}%") if session[:search_by] == "header"
+    tasks = tasks.where("content LIKE ?", "%#{params[:search]}%") if session[:search_by] == "content"
     tasks = tasks.where("status = ?", session[:option]) if session[:option] != '3'
     tasks
   end

@@ -1,5 +1,7 @@
 class Admin::LoginController < ApplicationController
-  def new; end
+  def new
+    redirect_to admin_tasks_path if current_user
+  end
 
   def create
     user = User.find_by(name: params[:login][:name])

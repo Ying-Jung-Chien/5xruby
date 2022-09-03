@@ -4,8 +4,7 @@ class LoginController < ApplicationController
   end
 
   def create
-    if current_user.nil?
-      user = User.find_by(name: params[:login][:name])
+    user = User.find_by(name: params[:login][:name])
       if user && user.authenticate(params[:login][:password])
         session[:user_id] = user.id
         if user.position == "user"
@@ -15,11 +14,8 @@ class LoginController < ApplicationController
         end
       else
         # Create an error message.
-        render 'new', notice: "Incorrect email or password, try again."
+        redirect_to login_path, notice: "Incorrect email or password, try again."
       end
-    else
-      redirect_to tasks_path
-    end
   end
 
   def destroy

@@ -1,44 +1,26 @@
-<div id="flash">
-    <% flash.each do |type, msg| %>
-    <div class="alert alert-info">
-        <%= msg %>
-    </div>
-    <% end %>
+<div class="pt-5 pr-4 items-center text-right">
+  <a href="/admin/users/new" data-turbo-frame="modal" class="py-3 px-2 items-center text-sm font-medium text-center text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:ring-4 focus:outline-none">
+      <%= t("add_user") %>
+  </a>
 </div>
 
+<div class="grid md:grid-cols-4 grid-cols-3 items-center">
+  <% @users.each_with_index  do |user, index | %>
+    <div id="user_<%= index %>" class="m-5 p-2 max-w-3xl bg-white rounded-lg border-4 border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+      <div>
+        <h6 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white"><%= user.name %></h6>
+        <p class="mt-2 font-normal text-gray-500 dark:text-gray-400"><%= t('position') %>:<%= t(user.position) %></p>
+        <p class="mt-2 font-normal text-gray-500 dark:text-gray-400"><%= t('number_tasks') %>:<%= count_tasks(user.id) %></p>
+      </div>
+        
+        
+      <div class="grid grid-cols-2 gap-2">
+        <%= link_to t("edit_user"), edit_admin_user_path(user), data: { turbo_frame: "modal" }, class:"py-3 px-2 items-center text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300" %>
+        <%= link_to t("delete_user"), admin_user_path(user), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" }, class:"py-3 px-2 items-center text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300" %>
+      </div>
+      
+    </div>
+  <% end %>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-    setTimeout(function(){
-        $('#flash').remove();
-    }, 5000);
-    })
-</script>
-
-<h1><%= t("user_list") %></h1>
-
-<%= link_to t("add_user"), new_admin_user_path %>
-
-<table>
-  <thead>
-    <tr>
-      <td><%= t("id") %></td>
-      <td><%= t("name") %></td>
-      <td><%= t("position") %></td>
-      <td><%= t("management") %></td>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-    <tr>
-      <td><%= user.id %></td>
-      <td><%= user.name %></td>
-      <td><%= user.position %></td>
-      <td>
-        <%= link_to t("edit_user"), edit_admin_user_path(user) %>
-        <%= link_to t("delete_user"), admin_user_path(user), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+  <%= paginate @users %>
+</div>

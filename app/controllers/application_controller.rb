@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   def current_user
     # Look up the current user based on user_id in the session cookie:
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
-
   end
 
   def authorize
@@ -22,7 +21,7 @@ class ApplicationController < ActionController::Base
     elsif current_user.position == "supervisor"
       true
     end
-  end  
+  end
 
   def set_locale
     session[:locale] = params[:locale] if params[:locale] && I18n.available_locales.include?(params[:locale].to_sym)

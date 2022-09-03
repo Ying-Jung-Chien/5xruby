@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
   before_action :authorize
   def index
-    @users = User.all
+    @users = User.page(params[:page])
   end
 
   def new
@@ -47,8 +47,12 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @user = User.find_by(id: params[:id])
-      @user.destroy if @user
-      redirect_to admin_users_path, notice: "Success!"
+    if @user
+      @tasks = Task.where('user_id = ?', @user.id)
+      @tasks.each(&:destroy)
+      @user.destroy
+    end
+    redirect_to admin_users_path, notice: "Success!"
   end
 
   def show
