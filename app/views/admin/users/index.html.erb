@@ -1,0 +1,44 @@
+<div id="flash">
+    <% flash.each do |type, msg| %>
+    <div class="alert alert-info">
+        <%= msg %>
+    </div>
+    <% end %>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+    setTimeout(function(){
+        $('#flash').remove();
+    }, 5000);
+    })
+</script>
+
+<h1><%= t("user_list") %></h1>
+
+<%= link_to t("add_user"), new_user_path %>
+
+<table>
+  <thead>
+    <tr>
+      <td><%= t("id") %></td>
+      <td><%= t("name") %></td>
+      <td><%= t("position") %></td>
+      <td><%= t("management") %></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.name %></td>
+      <td><%= user.position %></td>
+      <td>
+        <%= link_to t("edit_user"), edit_user_path(user) %>
+        <%= link_to t("delete_user"), user_path(user), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

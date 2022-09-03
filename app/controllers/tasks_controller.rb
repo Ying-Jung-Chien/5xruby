@@ -1,12 +1,9 @@
 class TasksController < ApplicationController
+  before_action :authorize
   def index
-    if current_user.nil?
-      redirect_to login_path, notice: "Please login!"
-    else
-      pre_assign_session
-      tasks = search_tasks
-      @tasks = tasks.order("#{session[:sort]} #{session[:dir]}")
-    end
+    pre_assign_session
+    tasks = search_tasks
+    @tasks = tasks.order("#{session[:sort]} #{session[:dir]}")
   end
 
   def new

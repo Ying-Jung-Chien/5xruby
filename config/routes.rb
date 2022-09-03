@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  namespace :admin do
+      resources :tags
+      resources :tasks
+      resources :users
+
+      root to: "login#new"
+  end
 
   # Defines the root path route ("/")
   root "login#new"

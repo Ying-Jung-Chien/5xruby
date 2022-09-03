@@ -1,0 +1,21 @@
+<%= form_for(:login, url: login_path, class:"login") do |f| %>
+    <div class="items-center m-3 flex justify-center">
+        <%= f.label :name, t("name"), style: "display: block", class: "form-label" %>
+        <%= f.text_field :name, class: "m-2 form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5" %>   
+    </div>
+
+    <div class="items-center m-3 flex justify-center">
+        <%= f.label :password, t("password"), style: "display: block", class: "form-label" %>
+        <%= f.text_field :password, class: "m-2 form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5" %>
+    </div>
+
+    <div class="flex justify-center">
+        <%= f.submit t("login"), class:"m-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center" %>
+    </div>
+    <div class="flex justify-center">
+        <p>New user?</p>
+        <a href="/users/new" data-turbo-frame="modal" class="py-3 px-2 items-center text-sm font-medium text-center text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:ring-4 focus:outline-none">
+            <%= "Sign up!" %>
+        </a>
+    </div>
+<% end %>
