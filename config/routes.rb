@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :tasks
   resources :tags
 
-  get    'login'   => 'login#new'
-  post   'login'   => 'login#create'
-  get 'logout'  => 'login#destroy'
+  get 'login', to: 'login#new'
+  post 'login', to: 'login#create'
+  get 'logout', to: 'login#destroy'
 end
