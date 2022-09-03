@@ -12,10 +12,6 @@ RSpec.feature "Tasks", type: :feature do
     click_button I18n.t("login")
     expect(page).to have_text("Logged in successfully")
   end
-
-  after(:each) do
-    @test_user.destroy
-  end
   
   scenario "creates a new task" do
     visit "/tasks"
