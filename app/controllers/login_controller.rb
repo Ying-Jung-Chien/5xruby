@@ -8,7 +8,11 @@ class LoginController < ApplicationController
       user = User.find_by(name: params[:login][:name])
       if user && user.authenticate(params[:login][:password])
         session[:user_id] = user.id
-        redirect_to tasks_path, notice: "Logged in successfully"
+        if user.position == "user"
+          redirect_to tasks_path, notice: "Logged in successfully"
+        else
+          redirect_to admin_users_path, notice: "Logged in successfully"
+        end
       else
         # Create an error message.
         render 'new', notice: "Incorrect email or password, try again."

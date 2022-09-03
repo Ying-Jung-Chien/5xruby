@@ -1,6 +1,6 @@
 <h1><%= t("edit_user") %></h1>
 
-<%= render "form", user: @user %>
+<%= render "form", user: @user, url: admin_user_path, method: :patch %>
 
 <br />
-<%= link_to t("back_to_user_list"), users_path %>
+<%= link_to t("back_to_user_list"), admin_users_path %>

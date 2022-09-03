@@ -17,7 +17,7 @@
 
 <h1><%= t("user_list") %></h1>
 
-<%= link_to t("add_user"), new_user_path %>
+<%= link_to t("add_user"), new_admin_user_path %>
 
 <table>
   <thead>
@@ -35,8 +35,8 @@
       <td><%= user.name %></td>
       <td><%= user.position %></td>
       <td>
-        <%= link_to t("edit_user"), edit_user_path(user) %>
-        <%= link_to t("delete_user"), user_path(user), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
+        <%= link_to t("edit_user"), edit_admin_user_path(user) %>
+        <%= link_to t("delete_user"), admin_user_path(user), method: "delete", data: { "turbo-method": :delete, turbo_confirm: "Confirm" } %>
       </td>
     </tr>
     <% end %>

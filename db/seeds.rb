@@ -6,6 +6,6 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-tasks = Task.where("id >= 30 AND id < 40")
+tasks = Task.where("id >= 50")
 user1 = User.find(4)
 user1.tasks << tasks

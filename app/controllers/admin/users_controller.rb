@@ -1,4 +1,5 @@
 class Admin::UsersController < ApplicationController
+  before_action :authorize
   def index
     @users = User.all
   end
@@ -16,7 +17,7 @@ class Admin::UsersController < ApplicationController
         if current_user.nil?
           format.html { redirect_to login_path, notice: "User was successfully created. Please login again!" }
         else
-          format.html { redirect_to users_path, notice: "User was successfully created." }
+          format.html { redirect_to admin_users_path, notice: "User was successfully created." }
         end
         format.json { render :show, status: :created, location: @user }
       else
@@ -37,7 +38,7 @@ class Admin::UsersController < ApplicationController
 
       if @user.update(user_params)
         # 成功
-        redirect_to users_path, notice: "Success!"
+        redirect_to admin_users_path, notice: "Success!"
       else
         # 失敗
         render :edit, status: :unprocessable_entity
@@ -47,7 +48,7 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user = User.find_by(id: params[:id])
       @user.destroy if @user
-      redirect_to users_path, notice: "Success!"
+      redirect_to admin_users_path, notice: "Success!"
   end
 
   def show
