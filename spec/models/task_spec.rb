@@ -1,7 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  subject {create(:task)}
+  before(:each) do
+    @test_user = create(:user)
+    @task = build(:task, status: 3)
+    @test_user.tasks << @task
+  end
+
+  after(:each) do
+    @test_user.destroy
+  end
+
+  subject {@task}
 
   describe "Validations" do
     context 'is not valid without a header' do
@@ -31,13 +41,15 @@ RSpec.describe Task, type: :model do
 
   describe "Search" do
     it 'finds a task by header' do
-      task = create(:task, header: 'test')
+      task = build(:task, header: 'test', status: 3)
+      @test_user.tasks << task
       result = described_class.where(header: 'test')
       expect(result).to eq([task])
     end
 
     it 'finds a task by status' do
-      task = create(:task, status: 2)
+      task = build(:task, status: 2)
+      @test_user.tasks << task
       result = described_class.where(status: 2)
       expect(result).to eq([task])
     end

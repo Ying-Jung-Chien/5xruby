@@ -2,12 +2,22 @@ require 'rails_helper'
 require 'webdrivers'
 
 RSpec.feature "Tasks", type: :feature do
+  before(:each) do
+    visit "/login"
+    @test_user = create(:user, name:"task_spec", password:"1234abcD")
+    within(".login") do # 填表單
+      fill_in I18n.t("name"), with: "task_spec"
+      fill_in I18n.t("password"), with: "1234abcD"
+    end
+    click_button I18n.t("login")
+    expect(page).to have_text("Logged in successfully")
+  end
+  
   scenario "creates a new task" do
     visit "/tasks"
     find("a[href='/tasks/new']").click
     expect(page).to have_selector(:id, 'modal')
 
-    create(:user)
     within("#new_task") do # 填表單
       fill_in I18n.t("header"), with: "test_spec"
       fill_in I18n.t("content"), with: "12345678"
@@ -24,7 +34,8 @@ RSpec.feature "Tasks", type: :feature do
   end
 
   scenario "edits a task" do
-    task = create(:task)
+    task = build(:task)
+    @test_user.tasks << task
 
     visit "/tasks"
     find("a[href='/tasks/#{task.id}/edit']").click
@@ -46,7 +57,8 @@ RSpec.feature "Tasks", type: :feature do
   end
 
   scenario "deletes a task" do
-    task = create(:task)
+    task = build(:task)
+    @test_user.tasks << task
 
     visit "/tasks"
     expect(Task.count).to eq(1)
@@ -57,7 +69,8 @@ RSpec.feature "Tasks", type: :feature do
   end
 
   scenario "order by end time" do
-    create_list(:task, 3)
+    tasks = build_list(:task, 3)
+    @test_user.tasks << tasks
 
     visit "/tasks"
     find("a[href='/tasks?dir=desc&sort=end_time']").click
@@ -81,8 +94,9 @@ RSpec.feature "Tasks", type: :feature do
   end
 
   scenario "search by header" do
-    create_list(:task, 28)
-    tasks = create_list(:task, 2, header:'abcdef')
+    @test_user.tasks << build_list(:task, 28)
+    tasks = build_list(:task, 2, header:'abcdef')
+    @test_user.tasks << tasks
     
     visit "/tasks" 
     fill_in :search, with: 'cde'
@@ -93,7 +107,7 @@ RSpec.feature "Tasks", type: :feature do
   end
 
   scenario "search by status" do
-    create_list(:task, 100)
+    @test_user.tasks << build_list(:task, 100)
     
     visit "/tasks"
     test_tasks = Task.where("status = 2").order("id asc")
@@ -105,7 +119,7 @@ RSpec.feature "Tasks", type: :feature do
   end
 
   scenario "order by priority" do
-    create_list(:task, 3)
+    @test_user.tasks << build_list(:task, 3)
 
     visit "/tasks"
     find("a[href='/tasks?dir=desc&sort=priority']").click

@@ -1,5 +1,3 @@
-<%= render partial: "shared/flash" %>
-
 <div class="pt-5 pr-4 items-center text-right">
     <a href="/tasks/new" data-turbo-frame="modal" class="py-3 px-2 items-center text-sm font-medium text-center text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:ring-4 focus:outline-none">
         <%= t("add_task") %>
@@ -25,7 +23,6 @@
                         <%= t(key) %>
                     </label>
                 <% end %>
-                <%# <%= submit_tag "Submit" %>
             <% end %>
         </div>
     </div>

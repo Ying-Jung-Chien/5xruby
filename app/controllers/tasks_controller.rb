@@ -1,8 +1,12 @@
 class TasksController < ApplicationController
   def index
-    pre_assign_session
-    tasks = search_tasks
-    @tasks = tasks.order("#{session[:sort]} #{session[:dir]}")
+    if current_user.nil?
+      redirect_to login_path, notice: "Please login!"
+    else
+      pre_assign_session
+      tasks = search_tasks
+      @tasks = tasks.order("#{session[:sort]} #{session[:dir]}")
+    end
   end
 
   def new
@@ -10,8 +14,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    temp_user = User.first
-    task = temp_user.tasks.build(task_params)
+    task = current_user.tasks.build(task_params)
 
     respond_to do |format|
       if task.save
@@ -70,7 +73,7 @@ class TasksController < ApplicationController
   end
 
   def search_tasks
-    tasks = Task.includes(:user).page(params[:page]).where("header LIKE ?", "%#{params[:search]}%")
+    tasks = Task.includes(:user).page(params[:page]).where("header LIKE ? AND user_id=?", "%#{params[:search]}%", current_user.id)
     tasks = tasks.where("status = ?", session[:option]) if session[:option] != '3'
     tasks
   end

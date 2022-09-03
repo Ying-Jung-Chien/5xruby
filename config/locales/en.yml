@@ -69,3 +69,5 @@ en:
 
   language: Language
   search_by_header: Search by header
+  login: Login
+  logout: Logout
