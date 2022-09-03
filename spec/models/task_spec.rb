@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Task, type: :model do
   before(:each) do
     @test_user = create(:user)
-    @task = build(:task)
+    @task = build(:task, status: 3)
     @test_user.tasks << @task
   end
 
