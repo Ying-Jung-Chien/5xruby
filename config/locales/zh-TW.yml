@@ -38,6 +38,8 @@
   back_to_user_list: 返回用戶列表
   number_tasks: 任務數量
 
+  tag: 標籤
+
   language: 語言
   search_by_header: 以標題搜尋
   login: 登入

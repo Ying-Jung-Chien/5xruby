@@ -70,6 +70,8 @@ en:
   back_to_user_list: Back to user list
   number_tasks: Number of tasks
 
+  tag: Tag
+
   language: Language
   search_by_header: Search by header
   login: Login

@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_31_140940) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_04_122849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "tag_id", null: false
+    t.bigint "task_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["task_id"], name: "index_taggings_on_task_id"
+  end
 
   create_table "tags", force: :cascade do |t|
     t.integer "task_id"
@@ -46,4 +55,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_31_140940) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "taggings", "tags"
+  add_foreign_key "taggings", "tasks"
 end
