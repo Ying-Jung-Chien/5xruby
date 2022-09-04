@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   # Make the current_user method available to views also, not just controllers:
   helper_method :current_user
-  helper_method :admin
+  helper_method :admin?
 
   # Define the current_user method:
   def current_user
@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
     redirect_to login_url, alert: "You don't have permission!" unless admin
   end
 
-  def admin
+  def admin?
     return true if current_user&.position == "supervisor"
 
     false
