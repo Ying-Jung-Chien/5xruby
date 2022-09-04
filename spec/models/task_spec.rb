@@ -7,10 +7,6 @@ RSpec.describe Task, type: :model do
     @test_user.tasks << @task
   end
 
-  after(:each) do
-    @test_user.destroy
-  end
-
   subject {@task}
 
   describe "Validations" do

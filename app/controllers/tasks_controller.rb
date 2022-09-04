@@ -1,12 +1,9 @@
 class TasksController < ApplicationController
+  before_action :authorize
   def index
-    if current_user.nil?
-      redirect_to login_path, notice: "Please login!"
-    else
-      pre_assign_session
-      tasks = search_tasks
-      @tasks = tasks.order("#{session[:sort]} #{session[:dir]}")
-    end
+    pre_assign_session
+    tasks = search_tasks
+    @tasks = tasks.order("#{session[:sort]} #{session[:dir]}")
   end
 
   def new
@@ -60,7 +57,7 @@ class TasksController < ApplicationController
   end
 
   def pre_assign_session
-    session_info = { dir: 'asc', option: '3', sort: 'id' }
+    session_info = { dir: 'asc', option: '3', sort: 'id', search_by: 'header' }
     session_info.each { |key, value| saved_by_session(key, value) }
   end
 
@@ -73,8 +70,10 @@ class TasksController < ApplicationController
   end
 
   def search_tasks
-    tasks = Task.includes(:user).page(params[:page]).where("header LIKE ? AND user_id=?", "%#{params[:search]}%", current_user.id)
-    tasks = tasks.where("status = ?", session[:option]) if session[:option] != '3'
+    tasks = Task.includes(:user).page(params[:page]).with_id(current_user.id)
+    tasks = tasks.with_header(params[:search]) if session[:search_by] == "header"
+    tasks = tasks.with_content(params[:search]) if session[:search_by] == "content"
+    tasks = tasks.with_status(session[:option]) if session[:option] != '3'
     tasks
   end
 end

@@ -55,6 +55,8 @@ en:
   solved: Solved
   all: All
   search: Search
+  owner: Owner
+  all_user: All user
 
   user: User
   supervisor: Supervisor
@@ -66,8 +68,10 @@ en:
   delete_user: Delete User
   add_user: Add User
   back_to_user_list: Back to user list
+  number_tasks: Number of tasks
 
   language: Language
   search_by_header: Search by header
   login: Login
   logout: Logout
+  sign_up: Sign up

@@ -1,0 +1,3 @@
+<%= render "shared/modal", title:t("edit_user") do %>
+    <%= render "form", user: @user, url: admin_user_path, method: :patch %>
+<% end %>

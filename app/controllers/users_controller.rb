@@ -1,8 +1,4 @@
 class UsersController < ApplicationController
-  def index
-    @users = User.all
-  end
-
   def new
     @user = User.new
   end
@@ -26,32 +22,6 @@ class UsersController < ApplicationController
         format.turbo_stream { render :form_update, status: :unprocessable_entity }
       end
     end
-  end
-
-  def edit
-    @user = User.find_by(id: params[:id])
-  end
-
-  def update
-    @user = User.find_by(id: params[:id])
-
-      if @user.update(user_params)
-        # 成功
-        redirect_to users_path, notice: "Success!"
-      else
-        # 失敗
-        render :edit, status: :unprocessable_entity
-      end
-  end
-
-  def destroy
-    @user = User.find_by(id: params[:id])
-      @user.destroy if @user
-      redirect_to users_path, notice: "Success!"
-  end
-
-  def show
-    @user = User.find_by(id: params[:id])
   end
 
   private

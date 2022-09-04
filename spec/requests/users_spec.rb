@@ -18,18 +18,14 @@ RSpec.describe "users", type: :request do
   }
 
   before(:all) do
-    @test_user = create(:user)
+    @test_user = create(:user, position:"supervisor")
     post login_url, params: { "login[name]": @test_user.name, "login[password]": @test_user.password }
-  end
-
-  after(:all) do
-    @test_user.destroy
   end
 
   describe "GET /index" do
     it "should assgins all users to @users" do
       user = create(:user)
-      get users_url
+      get admin_users_url
       expect(assigns(:users)).to eq [@test_user, user]
     end
   end
@@ -37,7 +33,7 @@ RSpec.describe "users", type: :request do
   describe "GET /show" do
     it "should assigns user to @user" do
       user = create(:user)
-      get user_url(user)
+      get admin_user_url(user)
       expect(assigns(:user)).to eq user
     end
   end
@@ -45,14 +41,14 @@ RSpec.describe "users", type: :request do
   describe "GET /edit" do
     it "should assigns user to @user" do
       user = create(:user)
-      get user_url(user)
+      get admin_user_url(user)
       expect(assigns(:user)).to eq user
     end
   end
 
   describe "GET /new" do
     it "should assigns a new user to @user" do
-      get new_user_url
+      get new_admin_user_url
       expect(assigns(:user)).to be_a_new(User)
     end
   end
@@ -61,28 +57,28 @@ RSpec.describe "users", type: :request do
     context "with valid parameters" do
       it "creates a new user" do
         expect {
-          post users_url, params: { user: valid_attributes }
+          post admin_users_url, params: { user: valid_attributes }
         }.to change(User, :count).by(1)
       end
 
       it "redirects to the created user" do
-        post users_url, params: { user: valid_attributes }
-        expect(response).to redirect_to(users_url)
+        post admin_users_url, params: { user: valid_attributes }
+        expect(response).to redirect_to(admin_users_url)
       end
     end
 
-    # context "with invalid parameters" do
-    #   it "does not create a new User" do
-    #     expect {
-    #       post users_url, params: { user: invalid_attributes }
-    #     }.to change(User, :count).by(0)
-    #   end
+    context "with invalid parameters" do
+      it "does not create a new User" do
+        expect {
+          post admin_users_url, params: { user: invalid_attributes }
+        }.to change(User, :count).by(0)
+      end
 
-    #   it "should render edit template" do
-    #     post users_url, params: { user: invalid_attributes }
-    #     expect(response).to redirect_to(users_url)
-    #   end
-    # end
+      it "should render new template" do
+        post admin_users_url, params: { user: invalid_attributes }
+        expect(response).to render_template(:new)
+      end
+    end
   end
 
   describe "PATCH /update" do
@@ -97,40 +93,40 @@ RSpec.describe "users", type: :request do
 
       it "updates the requested user" do
         user = create(:user)
-        patch user_url(user), params: { user: new_attributes }
+        patch admin_user_url(user), params: { user: new_attributes }
         user.reload
         expect(user.name).to eq new_attributes[:name]
       end
 
       it "redirects to the user" do
         user = create(:user)
-        patch user_url(user), params: { user: new_attributes }
+        patch admin_user_url(user), params: { user: new_attributes }
         user.reload
-        expect(response).to redirect_to(users_url)
+        expect(response).to redirect_to(admin_users_url)
       end
     end
 
-    # context "with invalid parameters" do
-    #   it "should render edit template" do
-    #     user = User.create(name:"test", password:"test", position:"user")
-    #     patch user_url(user), params: { user: invalid_attributes }
-    #     expect(response).to render_template(:edit)
-    #   end
-    # end
+    context "with invalid parameters" do
+      it "should render edit template" do
+        user = create(:user)
+        patch admin_user_url(user), params: { user: invalid_attributes }
+        expect(response).to render_template(:edit)
+      end
+    end
   end
 
   describe "DELETE /destroy" do
     it "destroys the requested user" do
-      user = create(:user)
+      user = create(:user, position:"user")
       expect {
-        delete user_url(user)
+        delete admin_user_url(user)
       }.to change(User, :count).by(-1)
     end
 
     it "redirects to the user list" do
       user = create(:user)
-      delete user_url(user)
-      expect(response).to redirect_to(users_url)
+      delete admin_user_url(user)
+      expect(response).to redirect_to(admin_users_url)
     end
   end
 end

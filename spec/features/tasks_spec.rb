@@ -73,7 +73,8 @@ RSpec.feature "Tasks", type: :feature do
     @test_user.tasks << tasks
 
     visit "/tasks"
-    find("a[href='/tasks?dir=desc&sort=end_time']").click
+    find("#label_sort_end_time").click
+    visit "/tasks?sort=end_time&dir=desc"
     tasks = Task.order("end_time desc")
     within '#task_1' do
       expect(page).to have_text tasks[1].header
@@ -83,7 +84,8 @@ RSpec.feature "Tasks", type: :feature do
       expect(page).to have_text tasks[2].header
     end
 
-    find("a[href='/tasks?dir=asc&sort=end_time']").click
+    find("#label_sort_end_time").click
+    visit "/tasks?sort=end_time&dir=asc"
     within '#task_1' do
       expect(page).to have_text tasks[1].header
     end
@@ -122,7 +124,9 @@ RSpec.feature "Tasks", type: :feature do
     @test_user.tasks << build_list(:task, 3)
 
     visit "/tasks"
-    find("a[href='/tasks?dir=desc&sort=priority']").click
+    
+    find("#label_sort_priority").click
+    visit "/tasks?sort=priority&dir=desc"
 
     tasks = Task.order("priority desc")
     within '#task_1' do
@@ -133,7 +137,8 @@ RSpec.feature "Tasks", type: :feature do
       expect(page).to have_text tasks[2].header
     end
 
-    find("a[href='/tasks?dir=asc&sort=priority']").click
+    find("#label_sort_priority").click
+    visit "/tasks?sort=priority&dir=asc"
     tasks = Task.order("priority asc")
     within '#task_1' do
       expect(page).to have_text tasks[1].header
