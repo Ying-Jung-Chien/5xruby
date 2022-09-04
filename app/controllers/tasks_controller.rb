@@ -53,7 +53,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:header, :content, :priority, :status, :start_time, :end_time, { tag_items: [] })
+    params.require(:task).permit(:header, :content, :priority, :status, :start_time, :end_time, :tag_list)
   end
 
   def pre_assign_session

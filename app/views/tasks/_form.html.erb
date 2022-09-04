@@ -107,7 +107,10 @@
     </div>
   </div>
 
-  
+  <div class="m-3">
+    <%= f.label :tag_list, t("tag_list"), style: "display: block", class: "form-label" %>
+    <%= f.text_field :tag_list %> 
+  </div>
 
   <div class="text-right">
     <%= f.submit t("submit"), class:"m-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center" %>
