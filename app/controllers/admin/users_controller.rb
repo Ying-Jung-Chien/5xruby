@@ -47,8 +47,14 @@ class Admin::UsersController < ApplicationController
       @tasks = Task.where('user_id = ?', @user.id)
       @tasks.each(&:destroy)
       @user.destroy
+      if User.exists?(id: params[:id])
+        redirect_to admin_users_path, notice: "At least one supervisor is required!"
+      else
+        redirect_to admin_users_path, notice: "Success!"
+      end
+    else
+      redirect_to admin_users_path, notice: "User not exist!"
     end
-    redirect_to admin_users_path, notice: "Success!"
   end
 
   def show

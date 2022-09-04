@@ -20,11 +20,9 @@ class ApplicationController < ActionController::Base
   end
 
   def admin
-    if current_user.nil?
-      false
-    elsif current_user.position == "supervisor"
-      true
-    end
+    return true if current_user&.position == "supervisor"
+
+    false
   end
 
   def set_locale

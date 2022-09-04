@@ -10,6 +10,6 @@ class User < ApplicationRecord
   private
 
   def check_supervisor
-    raise "Destroy aborted; you can't do that!" if User.where(position: 'supervisor').count < 2 && position == "supervisor"
+    throw(:abort) if User.where(position: 'supervisor').count < 2 && position == "supervisor"
   end
 end
