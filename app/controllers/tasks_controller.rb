@@ -70,10 +70,10 @@ class TasksController < ApplicationController
   end
 
   def search_tasks
-    tasks = Task.includes(:user).page(params[:page]).where("user_id = ?", current_user.id)
-    tasks = tasks.where("header LIKE ?", "%#{params[:search]}%") if session[:search_by] == "header"
-    tasks = tasks.where("content LIKE ?", "%#{params[:search]}%") if session[:search_by] == "content"
-    tasks = tasks.where("status = ?", session[:option]) if session[:option] != '3'
+    tasks = Task.includes(:user).page(params[:page]).with_id(current_user.id)
+    tasks = tasks.with_header(params[:search]) if session[:search_by] == "header"
+    tasks = tasks.with_content(params[:search]) if session[:search_by] == "content"
+    tasks = tasks.with_status(session[:option]) if session[:option] != '3'
     tasks
   end
 end

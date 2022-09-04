@@ -1,10 +1,8 @@
 <div class="flex flex-col items-center" data-controller="task">
-    <%= form_tag(admin_tasks_path, method: :get, :remote => true, data: {target: "task.form"}, class:"flex flex-col items-center") do %>
+    <%= form_tag(admin_user_tasks_path, method: :get, :remote => true, data: {target: "task.form"}, class:"flex flex-col items-center") do %>
         <div class="m-2 p-2">
             <%= select_tag(:search_by, options_for_select([[t('header'), 'header'], [t('content'), 'content']], session[:search_by])) %> 
             <%= text_field_tag(:search, params[:search], placeholder:t('search')) %>
-            <% users_array = User.all.map { |user| [user.name, user.id.to_s] } %>
-            <%= select_tag(:user_name, options_for_select(users_array.unshift([t('all_user'), '-1']), session[:user_name])) %> 
             <%= submit_tag t("search"), :class => "py-3 px-2 items-center text-sm font-medium text-center text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:ring-4 focus:outline-none" %>   
         </div>
 
@@ -32,11 +30,7 @@
                 </div>
             <% end %>
         </div>
-    <% end %>
-
-    
-
-    
+    <% end %>  
 
     <% @tasks.each_with_index  do |task, index | %>
         <div id="task_<%= index %>" class="m-5 p-2 max-w-3xl bg-white rounded-lg border-4 border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
@@ -59,7 +53,7 @@
                 </div>
                 <div class="col-span-2 grid grid-rows-3">
                     <div class="row-span-1 text-left">
-                        <p class="font-normal text-gray-500 dark:text-gray-400"><%= t('owner') %>:<%= id2name(task.user_id) %></p>
+                        <p class="font-normal text-gray-500 dark:text-gray-400"><%= t('owner') %>:<%= task.user.name %></p>
                     </div>
                     <div class="row-span-2">
                         <p class="font-normal text-gray-500 dark:text-gray-400"><%= t('created_at') %>:<%= task.created_at.to_formatted_s(:short) %></p>

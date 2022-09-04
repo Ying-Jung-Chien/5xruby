@@ -2,14 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   before(:each) do
-    @test_user = create(:user, position:"user")
+    @test_user = create(:user)
     @task = build(:task, status: 3)
     @test_user.tasks << @task
   end
-
-  # after(:each) do
-  #   @test_user.destroy
-  # end
 
   subject {@task}
 

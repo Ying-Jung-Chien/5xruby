@@ -67,18 +67,18 @@ RSpec.describe "users", type: :request do
       end
     end
 
-    # context "with invalid parameters" do
-    #   it "does not create a new User" do
-    #     expect {
-    #       post users_url, params: { user: invalid_attributes }
-    #     }.to change(User, :count).by(0)
-    #   end
+    context "with invalid parameters" do
+      it "does not create a new User" do
+        expect {
+          post admin_users_url, params: { user: invalid_attributes }
+        }.to change(User, :count).by(0)
+      end
 
-    #   it "should render edit template" do
-    #     post users_url, params: { user: invalid_attributes }
-    #     expect(response).to redirect_to(users_url)
-    #   end
-    # end
+      it "should render new template" do
+        post admin_users_url, params: { user: invalid_attributes }
+        expect(response).to render_template(:new)
+      end
+    end
   end
 
   describe "PATCH /update" do
@@ -106,13 +106,13 @@ RSpec.describe "users", type: :request do
       end
     end
 
-    # context "with invalid parameters" do
-    #   it "should render edit template" do
-    #     user = User.create(name:"test", password:"test", position:"user")
-    #     patch user_url(user), params: { user: invalid_attributes }
-    #     expect(response).to render_template(:edit)
-    #   end
-    # end
+    context "with invalid parameters" do
+      it "should render edit template" do
+        user = create(:user)
+        patch admin_user_url(user), params: { user: invalid_attributes }
+        expect(response).to render_template(:edit)
+      end
+    end
   end
 
   describe "DELETE /destroy" do

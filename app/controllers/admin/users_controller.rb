@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :authorize
+  before_action :authorize_admin
   def index
     @users = User.page(params[:page])
   end
@@ -14,11 +14,7 @@ class Admin::UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         # 成功
-        if current_user.nil?
-          format.html { redirect_to login_path, notice: "User was successfully created. Please login again!" }
-        else
-          format.html { redirect_to admin_users_path, notice: "User was successfully created." }
-        end
+        format.html { redirect_to admin_users_path, notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
         # 失敗
@@ -59,9 +55,38 @@ class Admin::UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
   end
 
+  def tasks
+    @user = User.find_by(id: params[:id])
+
+    pre_assign_session
+    tasks = search_tasks(params[:id])
+    @tasks = tasks.order("#{session[:sort]} #{session[:dir]}")
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:name, :password, :position)
+  end
+
+  def pre_assign_session
+    session_info = { dir: 'asc', option: '3', sort: 'id', user_name: '-1', search_by: 'header' }
+    session_info.each { |key, value| saved_by_session(key, value) }
+  end
+
+  def saved_by_session(arg, value)
+    if !request.query_string.present?
+      session[arg] = value
+    elsif params[arg].present?
+      session[arg] = params[arg]
+    end
+  end
+
+  def search_tasks(id)
+    tasks = Task.includes(:user).page(params[:page]).with_id(id)
+    tasks = tasks.with_header(params[:search]) if session[:search_by] == "header"
+    tasks = tasks.with_content(params[:search]) if session[:search_by] == "content"
+    tasks = tasks.with_status(session[:option]) if session[:option] != '3'
+    tasks
   end
 end

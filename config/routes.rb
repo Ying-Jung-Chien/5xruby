@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   namespace :admin do
       resources :tags
-      resources :tasks
       resources :users
 
-      root to: "login#new"
+      root to: "users#index"
+      get 'user/:id/tasks', to: 'users#tasks', as: 'user_tasks'
   end
 
   # Defines the root path route ("/")

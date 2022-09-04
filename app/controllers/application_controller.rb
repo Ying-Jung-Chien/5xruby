@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
     redirect_to login_url, alert: "Please login!" if current_user.nil?
   end
 
+  def authorize_admin
+    redirect_to login_url, alert: "You don't have permission!" unless admin
+  end
+
   def admin
     if current_user.nil?
       false
