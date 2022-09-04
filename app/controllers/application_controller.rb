@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize_admin
-    redirect_to login_url, alert: "You don't have permission!" unless admin
+    redirect_to login_url, alert: "You don't have permission!" unless admin?
   end
 
   def admin?
