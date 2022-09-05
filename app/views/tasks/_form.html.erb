@@ -1,4 +1,4 @@
-<%= form_for(task) do |f| %>
+<%= simple_form_for(task) do |f| %>
   <div class="m-3">
     <%= f.label :header, t("header"), style: "display: block", class: "form-label" %>
     <%= f.text_field :header, class: "form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %>
@@ -108,8 +108,27 @@
   </div>
 
   <div class="m-3">
-    <%= f.label :tag_list, t("tag_list"), style: "display: block", class: "form-label" %>
-    <%= f.text_field :tag_list %> 
+    <div class="rounded-lg border-2 border-gray-100 grid grid-flow-row-dense">
+      <div id="tags_list">
+        <% @task.tag_items.each  do | value | %>
+          <span data-controller="task-form" class="rounded-lg inline-flex items-center m-3 text-white bg-blue-700">
+            <p class="p-1"><%= value %></p>
+            <button data-action="task-form#remove" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                <%= inline_svg_tag "modal_close.svg", class:"w-3 h-3" %>
+            </button>
+          </span>
+        <% end %>      
+      </div>
+      
+      <div>
+        <input id="input_tag" class="p-1 m-3 rounded-lg" type="text" placeholder size="4">
+        <button data-controller="task-form" data-action="task-form#add" type="button" class="m-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center" >
+          <%= t('add_tag')%>
+        </button>
+      </div>
+      
+    </div>
+    <%= f.text_field :tag_list, style:"display:none" %>
   </div>
 
   <div class="text-right">

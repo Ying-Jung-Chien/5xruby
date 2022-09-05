@@ -37,8 +37,10 @@
   delete_user: 刪除用戶
   back_to_user_list: 返回用戶列表
   number_tasks: 任務數量
+  view_tasks: 檢視任務
 
   tag: 標籤
+  add_tag: 新增標籤
 
   language: 語言
   search_by_header: 以標題搜尋

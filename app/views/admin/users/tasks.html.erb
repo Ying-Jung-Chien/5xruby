@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center" data-controller="task">
     <%= form_tag(admin_user_tasks_path, method: :get, :remote => true, data: {target: "task.form"}, class:"flex flex-col items-center") do %>
         <div class="m-2 p-2">
-            <%= select_tag(:search_by, options_for_select([[t('header'), 'header'], [t('content'), 'content']], session[:search_by])) %> 
+            <%= select_tag(:search_by, options_for_select([[t('header'), 'header'], [t('content'), 'content'], [t('tag'), 'tag']], session[:search_by])) %> 
             <%= text_field_tag(:search, params[:search], placeholder:t('search')) %>
             <%= submit_tag t("search"), :class => "py-3 px-2 items-center text-sm font-medium text-center text-white bg-gray-500 rounded-lg hover:bg-gray-600 focus:ring-4 focus:outline-none" %>   
         </div>
@@ -50,6 +50,13 @@
                     <div class="rounded-lg max-h-16 border-2 border-gray-200">
                         <p class="mb-3 font-normal text-gray-500 dark:text-gray-400"><%= task.content %></p>
                     </div>
+                    <% if  task.tags.count > 0 %>
+                        <% task.tag_items.each do |item| %>
+                            <div class="inline-flex items-center mt-1 py-1 px-2 text-sm font-medium text-center text-white bg-orange-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <%= item %>
+                            </div>
+                        <% end %>
+                    <% end %>
                 </div>
                 <div class="col-span-2 grid grid-rows-3">
                     <div class="row-span-1 text-left">

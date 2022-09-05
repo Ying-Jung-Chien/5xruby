@@ -11,10 +11,10 @@ class TasksController < ApplicationController
   end
 
   def create
-    task = current_user.tasks.build(task_params)
+    @task = current_user.tasks.build(task_params)
 
     respond_to do |format|
-      if task.save
+      if @task.save
         format.html { redirect_to tasks_path, notice: "Task was successfully created." }
         format.json { render :show, status: :created, location: @task }
       else
@@ -73,16 +73,16 @@ class TasksController < ApplicationController
     tasks = search_by_tag
     tasks = tasks.page(params[:page]).with_id(current_user.id)
     tasks = tasks.with_header(params[:search]) if session[:search_by] == "header"
-    tasks = tasks.with_content(params[:search]) if session[:search_by] == "content"   
+    tasks = tasks.with_content(params[:search]) if session[:search_by] == "content"
     tasks = tasks.with_status(session[:option]) if session[:option] != '3'
     tasks
   end
 
   def search_by_tag
     if session[:search_by] == "tag" && params[:search].present?
-      Task.tagged_with(params[:search]).includes(:user) 
+      Task.tagged_with(params[:search]).includes(:user)
     else
       Task.includes(:user)
-    end 
+    end
   end
 end
