@@ -2,15 +2,3 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-// window.addEventListener("turbolinks:load", () => {
-//     hideNotice();
-//   });
-  
-//   function hideNotice() {
-//     const notification = document.querySelector('.alert')
-//     if (notification) {
-//       setInterval(function() {
-//         notification.classList.add('fade');
-//       }, 3000);
-//     }
-//   }

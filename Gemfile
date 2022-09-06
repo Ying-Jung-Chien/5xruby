@@ -55,6 +55,10 @@ gem "kaminari", "~> 1.2"
 gem "tailwindcss-rails"
 
 gem 'inline_svg'
+
+gem 'simple_form'
+
+gem 'bootstrap-tagsinput-rails'
 # Use Sass to process CSS
 # gem "sassc-rails"
 

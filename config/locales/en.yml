@@ -69,9 +69,21 @@ en:
   add_user: Add User
   back_to_user_list: Back to user list
   number_tasks: Number of tasks
+  view_tasks: View Tasks
+
+  tag: Tag
+  add_tag: Add Tag
 
   language: Language
   search_by_header: Search by header
   login: Login
   logout: Logout
   sign_up: Sign up
+
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              invalid_password: " only accepts:length >= 8, at least one digit & lower/upper character"

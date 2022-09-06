@@ -37,9 +37,33 @@
   delete_user: 刪除用戶
   back_to_user_list: 返回用戶列表
   number_tasks: 任務數量
+  view_tasks: 檢視任務
+
+  tag: 標籤
+  add_tag: 新增標籤
 
   language: 語言
   search_by_header: 以標題搜尋
   login: 登入
   logout: 登出
   sign_up: 註冊
+
+  activerecord:
+    attributes:
+      user:
+        name: "名字"
+        password: "密碼"
+        position: "職位"
+      task:
+        header: 標題
+        content: 內容
+        priority: 優先順序
+        status: 狀態
+        start_time: 開始時間
+        end_time: 結束時間
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              invalid_password: " 長度需 >= 8, 至少各一個大小寫英文字母跟數字"

@@ -65,7 +65,7 @@ class Admin::UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
 
     pre_assign_session
-    tasks = search_tasks(params[:id])
+    tasks = search_tasks
     @tasks = tasks.order("#{session[:sort]} #{session[:dir]}")
   end
 
@@ -88,11 +88,20 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  def search_tasks(id)
-    tasks = Task.includes(:user).page(params[:page]).with_id(id)
+  def search_tasks
+    tasks = search_by_tag
+    tasks = tasks.page(params[:page]).with_id(params[:id])
     tasks = tasks.with_header(params[:search]) if session[:search_by] == "header"
     tasks = tasks.with_content(params[:search]) if session[:search_by] == "content"
     tasks = tasks.with_status(session[:option]) if session[:option] != '3'
     tasks
+  end
+
+  def search_by_tag
+    if session[:search_by] == "tag" && params[:search].present?
+      Task.tagged_with(params[:search]).includes(:user)
+    else
+      Task.includes(:user)
+    end
   end
 end
