@@ -2,12 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="task-form"
 export default class extends Controller {
-  connect() {
-    console.log("connect");
-  }
-
   add() {
-    console.log("add")
     const tag = document.getElementById('input_tag');
     if (tag.value == '') return;
     const input = tag.value;
@@ -17,13 +12,10 @@ export default class extends Controller {
     if (list.value == '') list.value += input;
     else list.value += ',' + input;
 
-    console.log(list.value);
     this.create_existed_list(input);
   }
 
   remove() {
-    console.log("remove")
-    console.log(this.element.textContent.trim());
     this.element.classList.add('hidden');
 
     const list = document.getElementById('task_tag_list');
