@@ -11,7 +11,7 @@ class Task < ApplicationRecord
   validates :priority, presence: true
   validates :status, presence: true
   validates :start_time, presence: true
-  validates :end_time, presence: true, comparison: { greater_than: :start_time }
+  validates :end_time, comparison: { greater_than: :start_time }
 
   scope :with_id, ->(id) { where("user_id = ?", id) }
   scope :with_header, ->(search_content) { where("header LIKE ?", "%#{search_content}%") }

@@ -25,6 +25,8 @@ RSpec.feature "Tasks", type: :feature do
       choose('task[status]',option:0)
       fill_in I18n.t("start_time"), with: "2022-08-22T14:39:30Z"
       fill_in I18n.t("end_time"), with: "2022-08-23T14:39:30Z"
+      fill_in 'input_tag', with: "apple"
+      click_button I18n.t("add_tag")
     end
     click_button I18n.t("submit")
     expect(page).to have_text("Task was successfully created.")
@@ -48,6 +50,8 @@ RSpec.feature "Tasks", type: :feature do
       choose('task[status]',option:0)
       fill_in I18n.t("start_time"), with: "2022-08-22T14:39:30Z"
       fill_in I18n.t("end_time"), with: "2022-08-23T14:39:30Z"
+      fill_in 'input_tag', with: "apple"
+      click_button I18n.t("add_tag")
     end
     click_button I18n.t("submit")
     expect(page).to have_text("Task was successfully edited.")
@@ -95,31 +99,6 @@ RSpec.feature "Tasks", type: :feature do
     end
   end
 
-  scenario "search by header" do
-    @test_user.tasks << build_list(:task, 28)
-    tasks = build_list(:task, 2, header:'abcdef')
-    @test_user.tasks << tasks
-    
-    visit "/tasks" 
-    fill_in :search, with: 'cde'
-    click_button I18n.t('search')
-    within '#task_1' do
-      expect(page).to have_text tasks[1].header
-    end
-  end
-
-  scenario "search by status" do
-    @test_user.tasks << build_list(:task, 100)
-    
-    visit "/tasks"
-    test_tasks = Task.where("status = 2").order("id asc")
-    find('label', :text => I18n.t('pending')).click
-    visit "/tasks?option=2"
-    within '#task_1' do
-      expect(page).to have_text test_tasks[1].header
-    end
-  end
-
   scenario "order by priority" do
     @test_user.tasks << build_list(:task, 3)
 
@@ -148,4 +127,44 @@ RSpec.feature "Tasks", type: :feature do
       expect(page).to have_text tasks[2].header
     end
   end
+
+  scenario "search by header" do
+    @test_user.tasks << build_list(:task, 28)
+    tasks = build_list(:task, 2, header:'abcdef')
+    @test_user.tasks << tasks
+    
+    visit "/tasks" 
+    fill_in :search, with: 'cde'
+    click_button I18n.t('search')
+    within '#task_1' do
+      expect(page).to have_text tasks[1].header
+    end
+  end
+
+  scenario "search by status" do
+    @test_user.tasks << build_list(:task, 100)
+    
+    visit "/tasks"
+    test_tasks = Task.where("status = 2").order("id asc")
+    find('label', :text => I18n.t('pending')).click
+    visit "/tasks?option=2"
+    within '#task_1' do
+      expect(page).to have_text test_tasks[1].header
+    end
+  end
+
+  scenario "search by tag" do
+    @test_user.tasks << build_list(:task, 9)
+    task = build(:task, tag_list:'apple')
+    @test_user.tasks << task
+    
+    visit "/tasks" 
+    select I18n.t("tag"), :from => "search_by"
+    fill_in :search, with: 'apple'
+    click_button I18n.t('search')
+    within '#task_0' do
+      expect(page).to have_text task.header
+    end
+  end
+  
 end

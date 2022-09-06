@@ -79,3 +79,11 @@ en:
   login: Login
   logout: Logout
   sign_up: Sign up
+
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password:
+              invalid_password: " only accepts:length >= 8, at least one digit & lower/upper character"

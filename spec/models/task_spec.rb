@@ -49,5 +49,12 @@ RSpec.describe Task, type: :model do
       result = described_class.where(status: 2)
       expect(result).to eq([task])
     end
+
+    it 'finds a task by tag' do
+      task = build(:task, status: 2, tag_list: "apple")
+      @test_user.tasks << task
+      result = Task.tagged_with("apple")
+      expect(result).to eq([task])
+    end
   end
 end
